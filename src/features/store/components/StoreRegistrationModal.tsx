@@ -1,5 +1,5 @@
-import { useState } from "react"
-import { useForm } from "react-hook-form"
+import { useState } from "react";
+import { useForm } from "react-hook-form";
 import {
   Dialog,
   DialogContent,
@@ -8,7 +8,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
+} from "@/components/ui/dialog";
 import {
   Form,
   FormControl,
@@ -17,21 +17,23 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form"
+} from "@/components/ui/form";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Plus } from "lucide-react"
-import type { CreateStoreFormData, CreateStoreDto } from "../types/store.types"
+} from "@/components/ui/select";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Plus } from "lucide-react";
+import type { CreateStoreFormData, CreateStoreDto } from "../types/store.types";
+import { supabase } from "@/lib/supabase";
 
 export function StoreRegistrationModal() {
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const form = useForm<CreateStoreFormData>({
     defaultValues: {
@@ -55,40 +57,76 @@ export function StoreRegistrationModal() {
       cover_image_url: "",
       admin_notes: "",
     },
-  })
+  });
 
-  const onSubmit = (data: CreateStoreFormData) => {
-    // Transform form data to DTO
-    const dto: CreateStoreDto = {
-      name: data.name,
-      shop_type: data.shop_type as "gacha" | "figure" | "both",
-      description: data.description || undefined,
-      phone: data.phone || undefined,
-      website_url: data.website_url || undefined,
-      address_full: data.address_full,
-      postal_code: data.postal_code || undefined,
-      region_level1: data.region_level1,
-      region_level2: data.region_level2 || undefined,
-      region_level3: data.region_level3 || undefined,
-      latitude: parseFloat(data.latitude),
-      longitude: parseFloat(data.longitude),
-      is_24_hours: data.is_24_hours,
-      gacha_machine_count: data.gacha_machine_count
-        ? parseInt(data.gacha_machine_count)
-        : undefined,
-      verification_status: data.verification_status,
-      data_source: data.data_source,
-      thumbnail_url: data.thumbnail_url || undefined,
-      cover_image_url: data.cover_image_url || undefined,
-      admin_notes: data.admin_notes || undefined,
+  const onSubmit = async (data: CreateStoreFormData) => {
+    setIsSubmitting(true);
+
+    try {
+      // Transform form data to DTO
+      const dto: CreateStoreDto = {
+        name: data.name,
+        shop_type: data.shop_type as "gacha" | "figure" | "both",
+        description: data.description || undefined,
+        phone: data.phone || undefined,
+        website_url: data.website_url || undefined,
+        address_full: data.address_full,
+        postal_code: data.postal_code || undefined,
+        region_level1: data.region_level1,
+        region_level2: data.region_level2 || undefined,
+        region_level3: data.region_level3 || undefined,
+        latitude: parseFloat(data.latitude),
+        longitude: parseFloat(data.longitude),
+        is_24_hours: data.is_24_hours,
+        gacha_machine_count: data.gacha_machine_count
+          ? parseInt(data.gacha_machine_count)
+          : undefined,
+        verification_status: data.verification_status,
+        data_source: data.data_source,
+        thumbnail_url: data.thumbnail_url || undefined,
+        cover_image_url: data.cover_image_url || undefined,
+        admin_notes: data.admin_notes || undefined,
+      };
+
+      // Get session for authentication
+      const {
+        data: { session },
+        error: sessionError,
+      } = await supabase.auth.getSession();
+      console.log("session", session);
+
+      if (sessionError || !session) {
+        throw new Error("인증이 필요합니다. 다시 로그인해주세요.");
+      }
+
+      // Call Edge Function
+      const { data: result, error } = await supabase.functions.invoke(
+        "admin-create-shop",
+        {
+          body: dto,
+        }
+      );
+
+      if (error) {
+        throw error;
+      }
+
+      console.log("스토어 생성 성공:", result);
+      alert("스토어가 성공적으로 등록되었습니다!");
+
+      setOpen(false);
+      form.reset();
+    } catch (error) {
+      console.error("스토어 등록 실패:", error);
+      alert(
+        `스토어 등록 실패: ${
+          error instanceof Error ? error.message : "알 수 없는 오류"
+        }`
+      );
+    } finally {
+      setIsSubmitting(false);
     }
-
-    console.log("스토어 등록:", dto)
-    // TODO: API 호출 로직 추가
-
-    setOpen(false)
-    form.reset()
-  }
+  };
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -405,12 +443,7 @@ export function StoreRegistrationModal() {
                   <FormItem>
                     <FormLabel>가챠 머신 개수</FormLabel>
                     <FormControl>
-                      <Input
-                        type="number"
-                        min="0"
-                        placeholder="0"
-                        {...field}
-                      />
+                      <Input type="number" min="0" placeholder="0" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -450,7 +483,8 @@ export function StoreRegistrationModal() {
                       </SelectContent>
                     </Select>
                     <FormDescription className="text-xs">
-                      관리자가 직접 등록하는 경우 "검증 완료"를 선택할 수 있습니다
+                      관리자가 직접 등록하는 경우 "검증 완료"를 선택할 수
+                      있습니다
                     </FormDescription>
                     <FormMessage />
                   </FormItem>
@@ -478,13 +512,9 @@ export function StoreRegistrationModal() {
                         <SelectItem value="admin_input">
                           관리자 직접 입력
                         </SelectItem>
-                        <SelectItem value="user_submit">
-                          사용자 제보
-                        </SelectItem>
+                        <SelectItem value="user_submit">사용자 제보</SelectItem>
                         <SelectItem value="crawling">크롤링</SelectItem>
-                        <SelectItem value="partner_api">
-                          파트너 API
-                        </SelectItem>
+                        <SelectItem value="partner_api">파트너 API</SelectItem>
                       </SelectContent>
                     </Select>
                     <FormMessage />
@@ -536,7 +566,9 @@ export function StoreRegistrationModal() {
 
             {/* 관리자 메모 */}
             <div className="space-y-4">
-              <h3 className="text-sm font-semibold text-gray-900">관리자 메모</h3>
+              <h3 className="text-sm font-semibold text-gray-900">
+                관리자 메모
+              </h3>
 
               <FormField
                 control={form.control}
@@ -560,22 +592,25 @@ export function StoreRegistrationModal() {
               />
             </div>
 
-            <DialogFooter className="sticky bottom-0 bg-white pt-4 border-t">
+            <DialogFooter className="sticky bottom-0  pt-4 ">
               <Button
                 type="button"
                 variant="outline"
                 onClick={() => {
-                  setOpen(false)
-                  form.reset()
+                  setOpen(false);
+                  form.reset();
                 }}
+                disabled={isSubmitting}
               >
                 취소
               </Button>
-              <Button type="submit">등록</Button>
+              <Button type="submit" disabled={isSubmitting}>
+                {isSubmitting ? "등록 중..." : "등록"}
+              </Button>
             </DialogFooter>
           </form>
         </Form>
       </DialogContent>
     </Dialog>
-  )
+  );
 }

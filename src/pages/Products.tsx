@@ -1,4 +1,5 @@
 import { StoreRegistrationModal } from "@/features/store/components/StoreRegistrationModal";
+import { StoreListTable } from "@/features/store/components/StoreListTable";
 
 export function Products() {
   return (
@@ -8,7 +9,7 @@ export function Products() {
         <StoreRegistrationModal />
       </div>
       <div className="bg-white rounded-lg shadow p-6">
-        <p className="text-gray-600">스토어 관리 페이지입니다.</p>
+        <StoreListTable />
       </div>
     </div>
   );
