@@ -1,0 +1,147 @@
+@import "tailwindcss";
+
+@theme {
+  /* ==================== TYPOGRAPHY ==================== */
+  --font-family-sans: "Toss Product Sans", Tossface, -apple-system, system-ui,
+    "Bazier Square", "Noto Sans KR", "Segoe UI", "Apple SD Gothic Neo", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+
+  --font-size-xs: 10px;
+  --font-size-sm: 11px;
+  --font-size-base: 12px;
+  --font-size-md: 14px;
+  --font-size-lg: 15px;
+  --font-size-xl: 17px;
+  --font-size-2xl: 19px;
+
+  --line-height-xs: 1.2;
+  --line-height-sm: 1.273;
+  --line-height-base: 1.334;
+  --line-height-md: 1.429;
+  --line-height-lg: 1.467;
+  --line-height-xl: 1.53;
+  --line-height-2xl: 1.579;
+
+  /* ==================== COLORS ==================== */
+  --color-primary: #1b64da;
+  --color-primary-light: #3182f6;
+  --color-primary-foreground: #ffffff;
+
+  --color-background: #ffffff;
+  --color-foreground: #000000;
+
+  --color-muted: oklch(from #001733 l c h / 0.04);
+  --color-muted-foreground: #4e5968;
+
+  --color-accent: oklch(from #001733 l c h / 0.04);
+  --color-accent-foreground: oklch(from #020913 l c h / 0.91);
+
+  --color-secondary: oklch(from #001733 l c h / 0.04);
+  --color-secondary-foreground: oklch(from #020913 l c h / 0.91);
+
+  --color-destructive: #ef4444;
+  --color-destructive-foreground: #ffffff;
+
+  --color-border: oklch(from #022047 l c h / 0.05);
+  --color-input: oklch(from #022047 l c h / 0.05);
+  --color-ring: #1b64da;
+
+  --color-card: #ffffff;
+  --color-card-foreground: #000000;
+
+  --color-link: #0000ee;
+
+  /* Badge Colors */
+  --color-badge-success: #10b981;
+  --color-badge-success-foreground: #ffffff;
+  --color-badge-warning: #f59e0b;
+  --color-badge-warning-foreground: #ffffff;
+  --color-badge-error: #ef4444;
+  --color-badge-error-foreground: #ffffff;
+  --color-badge-info: #3b82f6;
+  --color-badge-info-foreground: #ffffff;
+  --color-badge-neutral: #6b7280;
+  --color-badge-neutral-foreground: #ffffff;
+
+  /* ==================== RADIUS ==================== */
+  --radius-xs: 4px;
+  --radius-sm: 5px;
+  --radius: 6px;
+  --radius-md: 8px;
+  --radius-lg: 9px;
+  --radius-xl: 10px;
+  --radius-2xl: 12px;
+  --radius-3xl: 14px;
+  --radius-full: 100px;
+
+  /* ==================== SPACING - Component Heights ==================== */
+  --spacing-component-xs: 16px;
+  --spacing-component-sm: 18px;
+  --spacing-component-base: 20px;
+  --spacing-component-md: 22px;
+  --spacing-component-lg: 24px;
+  --spacing-component-xl: 28px;
+  --spacing-component-2xl: 32px;
+  --spacing-component-3xl: 34px;
+  --spacing-component-4xl: 40px;
+  --spacing-component-5xl: 46px;
+  --spacing-component-6xl: 48px;
+  --spacing-component-7xl: 56px;
+
+  /* ==================== SHADOWS ==================== */
+  --shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1),
+    0 4px 6px -4px rgb(0 0 0 / 0.1);
+}
+
+@layer base {
+  :root {
+    /* Custom CSS variables for button padding (horizontal) */
+    --padding-button-narrow-16: 8px;
+    --padding-button-narrow-20: 10px;
+    --padding-button-narrow-24: 12px;
+    --padding-button-narrow-32: 14px;
+    --padding-button-narrow-40: 16px;
+    --padding-button-narrow-48: 18px;
+
+    --padding-button-regular-16: 12px;
+    --padding-button-regular-20: 14px;
+    --padding-button-regular-24: 16px;
+    --padding-button-regular-32: 18px;
+    --padding-button-regular-40: 20px;
+    --padding-button-regular-48: 22px;
+
+    --padding-button-wide-16: 16px;
+    --padding-button-wide-20: 18px;
+    --padding-button-wide-24: 20px;
+    --padding-button-wide-32: 24px;
+    --padding-button-wide-40: 28px;
+    --padding-button-wide-48: 32px;
+
+    /* Toss specific border shadow */
+    --shadow-border: inset 0 0 0 1px rgb(229 232 235);
+  }
+}
+
+:root {
+  font-family: var(--font-family-sans);
+  line-height: var(--line-height-lg);
+  font-weight: 400;
+
+  color-scheme: light;
+  color: rgb(var(--color-text-primary));
+  background-color: rgb(var(--color-background));
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+}
