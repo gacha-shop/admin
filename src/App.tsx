@@ -4,11 +4,13 @@ import { Dashboard } from "./pages/Dashboard";
 import { Products } from "./pages/Products";
 import { Users } from "./pages/Users";
 import { Settings } from "./pages/Settings";
+import { Login } from "./pages/Login";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/login" element={<Login />} />
         <Route path="/" element={<MainLayout />}>
           <Route index element={<Dashboard />} />
           <Route path="products" element={<Products />} />
