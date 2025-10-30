@@ -11,6 +11,7 @@ Gacha Store Admin 프로젝트의 모든 문서가 여기에 있습니다.
 
 - [Code Guidelines](./guides/code-guidelines.md) - 코딩 규칙
 - [Migration Guide](./guides/migration-guide.md) - 디렉토리 구조 마이그레이션 가이드
+- [Edge Functions Guide](./guides/edge-functions-guide.md) - Supabase Edge Functions 관리 가이드
 
 ## 아키텍처
 
@@ -49,6 +50,9 @@ Gacha Store Admin 프로젝트의 모든 문서가 여기에 있습니다.
 
 - [Common Issues](./troubleshooting/common-issues.md) - 자주 발생하는 문제
 - [Debugging Guide](./troubleshooting/debugging.md) - 디버깅 가이드
+- [Store API: Nullable Location Fields](./troubleshooting/store-api-nullable-fields.md) - 스토어 생성 API 위치 정보 필수 여부 설계
+- [RLS: Users Infinite Recursion](./troubleshooting/rls-users-infinite-recursion.md) - users 테이블 RLS 정책 무한 재귀 오류
+- [RLS: Shops INSERT Denied](./troubleshooting/rls-shops-insert-denied.md) - shops 테이블 INSERT 권한 거부 오류
 
 ## 문서 작성 가이드
 
