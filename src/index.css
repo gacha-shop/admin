@@ -1,10 +1,10 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 @theme {
   /* ==================== TYPOGRAPHY ==================== */
-  --font-family-sans: "Toss Product Sans", Tossface, -apple-system, system-ui,
-    "Bazier Square", "Noto Sans KR", "Segoe UI", "Apple SD Gothic Neo", Roboto,
-    "Helvetica Neue", Arial, sans-serif;
+  --font-family-sans: 'Toss Product Sans', Tossface, -apple-system, system-ui,
+    'Bazier Square', 'Noto Sans KR', 'Segoe UI', 'Apple SD Gothic Neo', Roboto,
+    'Helvetica Neue', Arial, sans-serif;
 
   --font-size-xs: 10px;
   --font-size-sm: 11px;
@@ -144,4 +144,25 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
+}
+
+/* Lighter placeholder color */
+::placeholder {
+  color: #c0c4ca;
+  opacity: 1;
+}
+
+::-webkit-input-placeholder {
+  color: #c0c4ca;
+  opacity: 1;
+}
+
+::-moz-placeholder {
+  color: #c0c4ca;
+  opacity: 1;
+}
+
+:-ms-input-placeholder {
+  color: #c0c4ca;
+  opacity: 1;
 }

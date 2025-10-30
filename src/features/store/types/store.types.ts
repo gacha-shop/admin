@@ -19,6 +19,11 @@ export type VerificationStatus = 'pending' | 'verified' | 'rejected'
 export type DataSource = 'user_submit' | 'admin_input' | 'crawling' | 'partner_api' | 'admin'
 
 /**
+ * Address type enum
+ */
+export type AddressType = 'R' | 'J'
+
+/**
  * Business hours structure
  */
 export interface BusinessHours {
@@ -52,13 +57,16 @@ export interface Store {
   website_url: string | null
 
   // Location data
-  address_full: string
-  postal_code: string | null
+  sido: string
+  sigungu: string | null
+  jibun_address: string | null
+  road_address: string
+  detail_address: string | null
+  zone_code: string | null
+  building_name: string | null
+  address_type: AddressType | null
   latitude: number
   longitude: number
-  region_level1: string
-  region_level2: string | null
-  region_level3: string | null
 
   // Business information
   business_hours: BusinessHours | null
@@ -96,11 +104,14 @@ export interface CreateStoreFormData {
   website_url: string
 
   // Location
-  address_full: string
-  postal_code: string
-  region_level1: string
-  region_level2: string
-  region_level3: string
+  sido: string
+  sigungu: string
+  jibun_address: string
+  road_address: string
+  detail_address: string
+  zone_code: string
+  building_name: string
+  address_type: AddressType | ''
   latitude: string
   longitude: string
 
@@ -132,11 +143,14 @@ export interface CreateStoreDto {
   website_url?: string
 
   // Location
-  address_full: string
-  postal_code?: string
-  region_level1: string
-  region_level2?: string
-  region_level3?: string
+  sido: string
+  sigungu?: string
+  jibun_address?: string
+  road_address: string
+  detail_address?: string
+  zone_code?: string
+  building_name?: string
+  address_type?: AddressType
   latitude: number
   longitude: number
 

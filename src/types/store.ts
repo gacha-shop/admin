@@ -1,5 +1,6 @@
 export type ShopType = 'gacha' | 'figure' | 'both';
 export type VerificationStatus = 'pending' | 'verified' | 'rejected';
+export type AddressType = 'R' | 'J';
 
 export interface Store {
   id: string;
@@ -12,13 +13,17 @@ export interface Store {
   description: string | null;
   phone: string | null;
   website_url: string | null;
-  address_full: string;
-  postal_code: string | null;
+  // New address structure
+  sido: string;
+  sigungu: string | null;
+  jibun_address: string | null;
+  road_address: string;
+  detail_address: string | null;
+  zone_code: string | null;
+  building_name: string | null;
+  address_type: AddressType | null;
   latitude: number | null;
   longitude: number | null;
-  region_level1: string | null;
-  region_level2: string | null;
-  region_level3: string | null;
   business_hours: Record<string, unknown> | null;
   is_24_hours: boolean | null;
   gacha_machine_count: number | null;
