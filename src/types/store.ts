@@ -1,6 +1,8 @@
-export type ShopType = 'gacha' | 'figure' | 'both';
-export type VerificationStatus = 'pending' | 'verified' | 'rejected';
-export type AddressType = 'R' | 'J';
+import type { DataSource } from "@/features/store/types/store.types";
+
+export type ShopType = "gacha" | "figure" | "both";
+export type VerificationStatus = "pending" | "verified" | "rejected";
+export type AddressType = "R" | "J";
 
 export interface Store {
   id: string;
@@ -31,7 +33,7 @@ export interface Store {
   verification_status: VerificationStatus;
   verified_at: string | null;
   verified_by: string | null;
-  data_source: string;
+  data_source: DataSource;
   last_confirmed_at: string | null;
   thumbnail_url: string | null;
   cover_image_url: string | null;

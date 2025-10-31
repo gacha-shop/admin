@@ -53,6 +53,7 @@ Gacha Store Admin 프로젝트의 모든 문서가 여기에 있습니다.
 - [Store API: Nullable Location Fields](./troubleshooting/store-api-nullable-fields.md) - 스토어 생성 API 위치 정보 필수 여부 설계
 - [RLS: Users Infinite Recursion](./troubleshooting/rls-users-infinite-recursion.md) - users 테이블 RLS 정책 무한 재귀 오류
 - [RLS: Shops INSERT Denied](./troubleshooting/rls-shops-insert-denied.md) - shops 테이블 INSERT 권한 거부 오류
+- [RLS: Shops UPDATE Denied](./troubleshooting/rls-shops-update-denied.md) - shops 테이블 UPDATE 권한 거부 오류 (스토어 삭제)
 
 ## 문서 작성 가이드
 
