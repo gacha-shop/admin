@@ -29,13 +29,14 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Plus, Search } from 'lucide-react';
 import type { CreateStoreFormData, CreateStoreDto } from '../types/store.types';
-import { supabase } from '@/lib/supabase';
+import { useCreateStore } from '@/hooks/useStores';
 import { AddressSearchDialog, type AddressData } from './AddressSearchDialog';
 
 export function StoreRegistrationModal() {
   const [open, setOpen] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [addressSearchOpen, setAddressSearchOpen] = useState(false);
+
+  const createStore = useCreateStore();
 
   const form = useForm<CreateStoreFormData>({
     defaultValues: {
@@ -65,8 +66,6 @@ export function StoreRegistrationModal() {
   });
 
   const onSubmit = async (data: CreateStoreFormData) => {
-    setIsSubmitting(true);
-
     try {
       // Transform form data to DTO
       const dto: CreateStoreDto = {
@@ -96,43 +95,24 @@ export function StoreRegistrationModal() {
         admin_notes: data.admin_notes || undefined,
       };
 
-      // Get session for authentication
-      const {
-        data: { session },
-        error: sessionError,
-      } = await supabase.auth.getSession();
-      console.log('session', session);
+      // Call mutation
+      await createStore.mutateAsync(dto);
 
-      if (sessionError || !session) {
-        throw new Error('인증이 필요합니다. 다시 로그인해주세요.');
-      }
-
-      // Call Edge Function
-      const { data: result, error } = await supabase.functions.invoke(
-        'admin-create-shop',
-        {
-          body: dto,
-        }
-      );
-
-      if (error) {
-        throw error;
-      }
-
-      console.log('스토어 생성 성공:', result);
+      // Success handling
+      console.log('스토어 생성 성공');
       alert('스토어가 성공적으로 등록되었습니다!');
 
+      // Close dialog and reset form
       setOpen(false);
       form.reset();
     } catch (error) {
+      // Error handling
       console.error('스토어 등록 실패:', error);
       alert(
         `스토어 등록 실패: ${
           error instanceof Error ? error.message : '알 수 없는 오류'
         }`
       );
-    } finally {
-      setIsSubmitting(false);
     }
   };
 
@@ -659,12 +639,12 @@ export function StoreRegistrationModal() {
                   setOpen(false);
                   form.reset();
                 }}
-                disabled={isSubmitting}
+                disabled={createStore.isPending}
               >
                 취소
               </Button>
-              <Button type='submit' disabled={isSubmitting}>
-                {isSubmitting ? '등록 중...' : '등록'}
+              <Button type='submit' disabled={createStore.isPending}>
+                {createStore.isPending ? '등록 중...' : '등록'}
               </Button>
             </DialogFooter>
           </form>
