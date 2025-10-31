@@ -1,5 +1,6 @@
 import { supabase } from '@/lib/supabase';
 import type { Store, StoreListParams, StoreListResponse } from '@/types/store';
+import type { CreateStoreDto } from '@/features/store/types/store.types';
 
 const EDGE_FUNCTION_URL = import.meta.env.VITE_SUPABASE_URL;
 
@@ -74,4 +75,32 @@ export async function fetchStoreById(id: string): Promise<Store> {
 
   const result = await response.json();
   return result.data;
+}
+
+/**
+ * Create a new store
+ */
+export async function createStore(dto: CreateStoreDto): Promise<Store> {
+  const { data, error } = await supabase.functions.invoke('admin-create-shop', {
+    body: dto,
+  });
+
+  if (error) {
+    throw new Error(error.message || 'Failed to create store');
+  }
+
+  return data;
+}
+
+/**
+ * Delete a store (soft delete)
+ */
+export async function deleteStore(id: string): Promise<void> {
+  const { error } = await supabase.functions.invoke('admin-delete-shop', {
+    body: { id },
+  });
+
+  if (error) {
+    throw new Error(error.message || 'Failed to delete store');
+  }
 }
