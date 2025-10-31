@@ -19,18 +19,25 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { StoreRegistrationModal } from "./StoreRegistrationModal";
 
 interface ColumnsProps {
   onDeleteClick: (store: Store) => void;
+  onEditClick: (store: Store) => void;
 }
 
 // Column definitions
-const createColumns = ({ onDeleteClick }: ColumnsProps): ColumnDef<Store>[] => [
+const createColumns = ({ onDeleteClick, onEditClick }: ColumnsProps): ColumnDef<Store>[] => [
   {
     accessorKey: "name",
     header: "매장명",
     cell: ({ row }) => (
-      <div className="font-medium">{row.getValue("name")}</div>
+      <button
+        onClick={() => onEditClick(row.original)}
+        className="font-medium text-blue-600 hover:text-blue-800 hover:underline cursor-pointer"
+      >
+        {row.getValue("name")}
+      </button>
     ),
   },
   {
@@ -122,6 +129,8 @@ export function StoreListTable() {
   });
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [storeToDelete, setStoreToDelete] = useState<Store | null>(null);
+  const [editModalOpen, setEditModalOpen] = useState(false);
+  const [selectedStoreId, setSelectedStoreId] = useState<string | undefined>(undefined);
 
   const { data, isLoading, error } = useStores({
     page: pagination.pageIndex + 1,
@@ -131,6 +140,11 @@ export function StoreListTable() {
   console.log("데이터 데이터!!", data);
 
   const deleteStore = useDeleteStore();
+
+  const handleEditClick = (store: Store) => {
+    setSelectedStoreId(store.id);
+    setEditModalOpen(true);
+  };
 
   const handleDeleteClick = (store: Store) => {
     setStoreToDelete(store);
@@ -154,7 +168,10 @@ export function StoreListTable() {
     setStoreToDelete(null);
   };
 
-  const columns = createColumns({ onDeleteClick: handleDeleteClick });
+  const columns = createColumns({
+    onDeleteClick: handleDeleteClick,
+    onEditClick: handleEditClick
+  });
 
   const table = useReactTable({
     data: data?.data ?? [],
@@ -189,6 +206,18 @@ export function StoreListTable() {
 
   return (
     <>
+      {/* Edit Modal */}
+      <StoreRegistrationModal
+        storeId={selectedStoreId}
+        open={editModalOpen}
+        onOpenChange={(open) => {
+          setEditModalOpen(open);
+          if (!open) {
+            setSelectedStoreId(undefined);
+          }
+        }}
+      />
+
       <div className="space-y-4">
         {/* Table */}
         <div className="border border-gray-300 rounded-lg overflow-hidden">
