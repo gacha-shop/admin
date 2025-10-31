@@ -3,6 +3,7 @@ import {
   fetchStores,
   fetchStoreById,
   createStore,
+  updateStore,
   deleteStore,
 } from "@/services/store.api";
 import type { StoreListParams } from "@/types/store";
@@ -26,6 +27,7 @@ export function useStore(id: string) {
     queryKey: ["store", id],
     queryFn: () => fetchStoreById(id),
     enabled: !!id,
+    staleTime: 0, // Always consider data as stale to allow immediate refetch after mutations
   });
 }
 
@@ -41,8 +43,31 @@ export function useCreateStore() {
       // Invalidate and refetch stores list (partial match, active queries only)
       queryClient.invalidateQueries({
         queryKey: ["stores"],
-        exact: false,        // Allow partial match (matches ['stores', params])
-        refetchType: "active" // Only refetch currently mounted queries
+        exact: false, // Allow partial match (matches ['stores', params])
+        refetchType: "active", // Only refetch currently mounted queries
+      });
+    },
+  });
+}
+
+/**
+ * Hook to update an existing store
+ */
+export function useUpdateStore() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: updateStore,
+    onSuccess: (data) => {
+      // Invalidate the specific store query
+      queryClient.invalidateQueries({
+        queryKey: ["store", data.id],
+      });
+      // Invalidate and refetch stores list (partial match, active queries only)
+      queryClient.invalidateQueries({
+        queryKey: ["stores"],
+        exact: false, // Allow partial match (matches ['stores', params])
+        refetchType: "active", // Only refetch currently mounted queries
       });
     },
   });
@@ -60,8 +85,8 @@ export function useDeleteStore() {
       // Invalidate and refetch stores list (partial match, active queries only)
       queryClient.invalidateQueries({
         queryKey: ["stores"],
-        exact: false,        // Allow partial match (matches ['stores', params])
-        refetchType: "active" // Only refetch currently mounted queries
+        exact: false, // Allow partial match (matches ['stores', params])
+        refetchType: "active", // Only refetch currently mounted queries
       });
     },
   });

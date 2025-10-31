@@ -1,6 +1,6 @@
 import { supabase } from '@/lib/supabase';
 import type { Store, StoreListParams, StoreListResponse } from '@/types/store';
-import type { CreateStoreDto } from '@/features/store/types/store.types';
+import type { CreateStoreDto, UpdateStoreDto } from '@/features/store/types/store.types';
 
 const EDGE_FUNCTION_URL = import.meta.env.VITE_SUPABASE_URL;
 
@@ -87,6 +87,21 @@ export async function createStore(dto: CreateStoreDto): Promise<Store> {
 
   if (error) {
     throw new Error(error.message || 'Failed to create store');
+  }
+
+  return data;
+}
+
+/**
+ * Update an existing store
+ */
+export async function updateStore(dto: UpdateStoreDto): Promise<Store> {
+  const { data, error } = await supabase.functions.invoke('admin-update-shop', {
+    body: dto,
+  });
+
+  if (error) {
+    throw new Error(error.message || 'Failed to update store');
   }
 
   return data;
