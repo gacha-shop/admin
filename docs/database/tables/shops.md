@@ -33,7 +33,7 @@
 | `shop_type`   | text        | ✓    | `'gacha'`, `'figure'`, `'both'` | 매장 유형<br>• `gacha`: 가챠 전문<br>• `figure`: 피규어 전문<br>• `both`: 가챠+피규어 복합 |
 | `description` | text        | -    | -                               | 매장 소개 및 설명                                                                          |
 | `phone`       | varchar(20) | -    | -                               | 매장 전화번호                                                                              |
-| `website_url` | text        | -    | -                               | 매장 웹사이트 URL                                                                          |
+| `social_urls` | jsonb       | -    | -                               | SNS URL 정보 (JSON 형식)<br>예: `{"website": "https://...", "instagram": "https://...", "x": "https://...", "youtube": "https://..."}` |
 
 ### 3. 주소 및 위치 정보 (Location Data)
 
@@ -87,7 +87,6 @@
 | ----------------- | ------ | ---- | ------ | ------------------------------------------------------------ |
 | `thumbnail_url`   | text   | -    | null   | 썸네일 이미지 URL (목록 표시용)                              |
 | `cover_image_url` | text   | -    | null   | 커버 이미지 URL (상세 페이지용)                              |
-| `tags`            | text[] | -    | null   | 매장 태그 목록<br>예: `['신규매장', '대형매장', '주차가능']` |
 
 ### 8. 관리자 메모 (Admin Notes)
 
@@ -246,5 +245,34 @@ ORDER BY reliability_score DESC, last_confirmed_at DESC;
 - 소셜/참여 지표: `view_count`, `favorite_count`, `review_count`, `average_rating`
 - 추천 시스템: `is_featured`, `display_order`
 - 상세 주소: `address_detail`, `address_road`, `address_jibun`
-- SNS 연동: `instagram_handle`
 - 영업 정보: `regular_holiday`
+
+## 최근 변경 사항
+
+### 2025-11-01: tags 컬럼 → 별도 테이블 분리
+
+- **변경 내용**: `tags` 컬럼(text[] 배열)을 제거하고, `tags` 테이블과 `shop_tags` 중간 테이블로 분리
+- **목적**:
+  - 태그를 중앙에서 일관성 있게 관리 (오타 방지)
+  - 태그별 사용 현황 추적 및 CRUD 관리 가능
+  - 태그 이름 변경 시 모든 스토어에 자동 반영
+  - M:N 관계로 태그별 스토어 검색 성능 최적화
+- **새로운 구조**:
+  - `tags` 테이블: 태그 마스터 데이터 (id, name, description)
+  - `shop_tags` 테이블: shops ↔ tags 다대다 관계 연결
+- **상세 문서**: [tags.md](../../../tags.md) 참조
+
+### 2025-01-11: website_url → social_urls 전환
+
+- **변경 내용**: 단일 `website_url` 컬럼을 `social_urls` (jsonb) 컬럼으로 변경
+- **목적**: 웹사이트뿐만 아니라 Instagram, X(Twitter), YouTube 등 다양한 SNS URL을 저장할 수 있도록 개선
+- **구조**:
+  ```json
+  {
+    "website": "https://example.com",      // Optional
+    "instagram": "https://instagram.com/...", // Optional
+    "x": "https://x.com/...",              // Optional
+    "youtube": "https://youtube.com/..."   // Optional
+  }
+  ```
+- **기존 데이터**: 기존 `website_url` 값은 자동으로 `{"website": "기존값"}` 형태로 마이그레이션됨
