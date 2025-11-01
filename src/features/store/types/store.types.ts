@@ -24,6 +24,16 @@ export type DataSource = 'user_submit' | 'admin_input' | 'crawling' | 'partner_a
 export type AddressType = 'R' | 'J'
 
 /**
+ * Social URLs structure
+ */
+export interface SocialUrls {
+  website?: string
+  instagram?: string
+  x?: string
+  youtube?: string
+}
+
+/**
  * Day schedule - either closed or with open/close times
  */
 export type DaySchedule =
@@ -65,7 +75,7 @@ export interface Store {
   shop_type: ShopType
   description: string | null
   phone: string | null
-  website_url: string | null
+  social_urls: SocialUrls | null
 
   // Location data
   sido: string
@@ -112,7 +122,7 @@ export interface CreateStoreFormData {
   shop_type: ShopType | ''
   description: string
   phone: string
-  website_url: string
+  social_urls: SocialUrls | null
 
   // Location
   sido: string
@@ -152,7 +162,7 @@ export interface CreateStoreDto {
   shop_type: ShopType
   description?: string
   phone?: string
-  website_url?: string
+  social_urls?: SocialUrls | null
 
   // Location
   sido: string
