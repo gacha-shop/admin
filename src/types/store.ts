@@ -4,6 +4,13 @@ export type ShopType = "gacha" | "figure" | "both";
 export type VerificationStatus = "pending" | "verified" | "rejected";
 export type AddressType = "R" | "J";
 
+export interface SocialUrls {
+  website?: string;
+  instagram?: string;
+  x?: string;
+  youtube?: string;
+}
+
 export interface Store {
   id: string;
   created_at: string;
@@ -14,7 +21,7 @@ export interface Store {
   shop_type: ShopType;
   description: string | null;
   phone: string | null;
-  website_url: string | null;
+  social_urls: SocialUrls | null;
   // New address structure
   sido: string;
   sigungu: string | null;
