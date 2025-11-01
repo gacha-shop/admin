@@ -1,4 +1,4 @@
-import type { DataSource } from "@/features/store/types/store.types";
+import type { DataSource, BusinessHours } from "@/features/store/types/store.types";
 
 export type ShopType = "gacha" | "figure" | "both";
 export type VerificationStatus = "pending" | "verified" | "rejected";
@@ -26,7 +26,7 @@ export interface Store {
   address_type: AddressType | null;
   latitude: number | null;
   longitude: number | null;
-  business_hours: Record<string, unknown> | null;
+  business_hours: BusinessHours | null;
   is_24_hours: boolean | null;
   gacha_machine_count: number | null;
   main_series: string[] | null;
