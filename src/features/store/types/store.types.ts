@@ -58,6 +58,18 @@ export interface BusinessHours {
 }
 
 /**
+ * Shop tag relationship
+ */
+export interface ShopTag {
+  tag_id: string
+  tags: {
+    id: string
+    name: string
+    description: string | null
+  }
+}
+
+/**
  * Complete store entity from database
  */
 export interface Store {
@@ -107,7 +119,7 @@ export interface Store {
   // Media & display
   thumbnail_url: string | null
   cover_image_url: string | null
-  tags: string[] | null
+  shop_tags: ShopTag[] | null
 
   // Admin notes
   admin_notes: string | null
@@ -123,6 +135,7 @@ export interface CreateStoreFormData {
   description: string
   phone: string
   social_urls: SocialUrls | null
+  tag_ids: string[]
 
   // Location
   sido: string
@@ -163,6 +176,7 @@ export interface CreateStoreDto {
   description?: string
   phone?: string
   social_urls?: SocialUrls | null
+  tag_ids?: string[]
 
   // Location
   sido: string

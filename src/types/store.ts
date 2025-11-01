@@ -11,6 +11,15 @@ export interface SocialUrls {
   youtube?: string;
 }
 
+export interface ShopTag {
+  tag_id: string;
+  tags: {
+    id: string;
+    name: string;
+    description: string | null;
+  };
+}
+
 export interface Store {
   id: string;
   created_at: string;
@@ -44,7 +53,7 @@ export interface Store {
   last_confirmed_at: string | null;
   thumbnail_url: string | null;
   cover_image_url: string | null;
-  tags: string[] | null;
+  shop_tags: ShopTag[] | null;
   admin_notes: string | null;
   created_by: string | null;
   updated_by: string | null;
