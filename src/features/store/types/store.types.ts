@@ -24,16 +24,27 @@ export type DataSource = 'user_submit' | 'admin_input' | 'crawling' | 'partner_a
 export type AddressType = 'R' | 'J'
 
 /**
- * Business hours structure
+ * Day schedule - either closed or with open/close times
+ */
+export type DaySchedule =
+  | { closed: true }
+  | { open: string; close: string }
+
+/**
+ * Business hours structure with schedule and metadata
  */
 export interface BusinessHours {
-  mon?: string
-  tue?: string
-  wed?: string
-  thu?: string
-  fri?: string
-  sat?: string
-  sun?: string
+  schedule: {
+    monday?: DaySchedule
+    tuesday?: DaySchedule
+    wednesday?: DaySchedule
+    thursday?: DaySchedule
+    friday?: DaySchedule
+    saturday?: DaySchedule
+    sunday?: DaySchedule
+  }
+  note?: string
+  breakTime?: string
 }
 
 /**
@@ -117,6 +128,7 @@ export interface CreateStoreFormData {
 
   // Operating information
   is_24_hours: boolean
+  business_hours: BusinessHours | null
   gacha_machine_count: string
 
   // Verification
@@ -156,6 +168,7 @@ export interface CreateStoreDto {
 
   // Operating information
   is_24_hours?: boolean
+  business_hours?: BusinessHours | null
   gacha_machine_count?: number
 
   // Verification
