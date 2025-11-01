@@ -27,7 +27,7 @@ import {
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Plus, Search } from "lucide-react";
+import { Plus, Search, Clock } from "lucide-react";
 import type {
   CreateStoreFormData,
   CreateStoreDto,
@@ -35,6 +35,7 @@ import type {
 } from "../types/store.types";
 import { useCreateStore, useUpdateStore, useStore } from "@/hooks/useStores";
 import { AddressSearchDialog, type AddressData } from "./AddressSearchDialog";
+import { OperatingHoursModal } from "./OperatingHoursModal";
 
 interface StoreRegistrationModalProps {
   storeId?: string;
@@ -49,6 +50,7 @@ export function StoreRegistrationModal({
 }: StoreRegistrationModalProps = {}) {
   const [internalOpen, setInternalOpen] = useState(false);
   const [addressSearchOpen, setAddressSearchOpen] = useState(false);
+  const [operatingHoursOpen, setOperatingHoursOpen] = useState(false);
 
   // Use controlled or uncontrolled state
   const isControlled = controlledOpen !== undefined;
@@ -81,6 +83,7 @@ export function StoreRegistrationModal({
       latitude: "",
       longitude: "",
       is_24_hours: false,
+      business_hours: null,
       gacha_machine_count: "",
       verification_status: "pending",
       data_source: "admin_input",
@@ -109,7 +112,8 @@ export function StoreRegistrationModal({
         address_type: storeData.address_type || "",
         latitude: storeData.latitude?.toString(),
         longitude: storeData.longitude?.toString(),
-        is_24_hours: storeData.is_24_hours || undefined,
+        is_24_hours: storeData.is_24_hours || false,
+        business_hours: storeData.business_hours || null,
         gacha_machine_count: storeData.gacha_machine_count?.toString() || "",
         verification_status: storeData.verification_status,
         data_source: storeData.data_source || undefined,
@@ -143,6 +147,7 @@ export function StoreRegistrationModal({
         latitude: parseFloat(data.latitude),
         longitude: parseFloat(data.longitude),
         is_24_hours: data.is_24_hours,
+        business_hours: data.is_24_hours ? null : data.business_hours,
         gacha_machine_count: data.gacha_machine_count
           ? parseInt(data.gacha_machine_count)
           : undefined,
@@ -533,25 +538,25 @@ export function StoreRegistrationModal({
                   운영 정보
                 </h3>
 
-                <FormField
-                  control={form.control}
-                  name="is_24_hours"
-                  render={({ field }) => (
-                    <FormItem className="flex flex-row items-start space-x-3 space-y-0">
-                      <FormControl>
-                        <input
-                          type="checkbox"
-                          checked={field.value}
-                          onChange={field.onChange}
-                          className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-2 focus:ring-primary"
-                        />
-                      </FormControl>
-                      <div className="space-y-1 leading-none">
-                        <FormLabel>24시간 운영</FormLabel>
-                      </div>
-                    </FormItem>
-                  )}
-                />
+                <div className="space-y-2">
+                  <FormLabel>영업시간</FormLabel>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={() => setOperatingHoursOpen(true)}
+                    className="w-full gap-2"
+                  >
+                    <Clock className="w-4 h-4" />
+                    {form.watch("is_24_hours")
+                      ? "24시간 영업"
+                      : form.watch("business_hours")
+                      ? "영업시간 설정됨"
+                      : "영업시간 설정"}
+                  </Button>
+                  <FormDescription className="text-xs">
+                    버튼을 클릭하여 영업시간을 설정하세요
+                  </FormDescription>
+                </div>
 
                 <FormField
                   control={form.control}
@@ -767,6 +772,17 @@ export function StoreRegistrationModal({
           form.setValue("zone_code", addressData.zoneCode);
           form.setValue("building_name", addressData.buildingName);
           form.setValue("address_type", addressData.addressType);
+        }}
+      />
+
+      <OperatingHoursModal
+        open={operatingHoursOpen}
+        onOpenChange={setOperatingHoursOpen}
+        is24Hours={form.watch("is_24_hours")}
+        businessHours={form.watch("business_hours")}
+        onSave={(is24Hours, businessHours) => {
+          form.setValue("is_24_hours", is24Hours);
+          form.setValue("business_hours", businessHours);
         }}
       />
     </Dialog>
