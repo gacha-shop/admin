@@ -5,6 +5,7 @@ import {
   Users,
   Settings,
   type LucideIcon,
+  Tags,
 } from 'lucide-react';
 
 interface MenuItem {
@@ -16,6 +17,7 @@ interface MenuItem {
 const menuItems: MenuItem[] = [
   { path: '/', label: '대시보드', icon: LayoutDashboard },
   { path: '/products', label: '스토어 관리', icon: Package },
+  { path: '/tags', label: '태그 관리', icon: Tags },
   { path: '/users', label: '사용자 관리', icon: Users },
   { path: '/settings', label: '설정 및 api', icon: Settings },
 ];
@@ -39,7 +41,7 @@ export function Sidebar() {
                   to={item.path}
                   className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
                     isActive
-                      ? 'bg-blue-600 text-white'
+                      ? 'bg-primary text-white'
                       : 'text-gray-300 hover:bg-gray-800 hover:text-white'
                   }`}
                 >
