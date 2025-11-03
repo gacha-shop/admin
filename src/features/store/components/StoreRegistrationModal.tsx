@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+
 import {
   Dialog,
   DialogContent,
@@ -36,6 +37,8 @@ import type {
 import { useCreateStore, useUpdateStore, useStore } from '@/hooks/useStores';
 import { AddressSearchDialog, type AddressData } from './AddressSearchDialog';
 import { OperatingHoursModal } from './OperatingHoursModal';
+import { useTags } from '@/hooks/useTags';
+import { TagMultiSelect } from '@/components/tag/TagMultiSelect';
 
 interface StoreRegistrationModalProps {
   storeId?: string;
@@ -59,6 +62,7 @@ export function StoreRegistrationModal({
 
   const isEditMode = !!storeId;
 
+  const { data } = useTags();
   const createStore = useCreateStore();
   const updateStore = useUpdateStore();
   const { data: storeData, isLoading: isLoadingStore } = useStore(
@@ -72,6 +76,7 @@ export function StoreRegistrationModal({
       description: '',
       phone: '',
       social_urls: null,
+      tag_ids: [],
       sido: '',
       sigungu: '',
       jibun_address: '',
@@ -96,12 +101,15 @@ export function StoreRegistrationModal({
   // Load store data when editing
   useEffect(() => {
     if (isEditMode && storeData && open) {
+      const existingTagIds =
+        storeData.shop_tags?.map((st) => st.tag_id) || [];
       form.reset({
         name: storeData.name,
         shop_type: storeData.shop_type,
         description: storeData.description || '',
         phone: storeData.phone || '',
         social_urls: storeData.social_urls || null,
+        tag_ids: existingTagIds,
         sido: storeData.sido,
         sigungu: storeData.sigungu || '',
         jibun_address: storeData.jibun_address || '',
@@ -136,6 +144,7 @@ export function StoreRegistrationModal({
         description: data.description || undefined,
         phone: data.phone || undefined,
         social_urls: data.social_urls || undefined,
+        tag_ids: data.tag_ids.length > 0 ? data.tag_ids : undefined,
         sido: data.sido,
         sigungu: data.sigungu || undefined,
         jibun_address: data.jibun_address || undefined,
@@ -264,6 +273,24 @@ export function StoreRegistrationModal({
                           <SelectItem value='both'>가챠 + 피규어</SelectItem>
                         </SelectContent>
                       </Select>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name='tag_ids'
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>태그</FormLabel>
+                      <FormControl>
+                        <TagMultiSelect
+                          tags={data || []}
+                          selectedTagIds={field.value}
+                          onSelectedChange={field.onChange}
+                        />
+                      </FormControl>
                       <FormMessage />
                     </FormItem>
                   )}
