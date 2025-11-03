@@ -5,9 +5,10 @@
 ## 테이블 개요
 
 - **테이블명**: `shops`
-- **총 컬럼 수**: 31개
+- **총 컬럼 수**: 33개
 - **Row Level Security (RLS)**: 활성화됨
 - **Primary Key**: `id` (UUID)
+- **관련 테이블**: `shop_images` (다중 이미지 지원, [shop_images.md](./shop_images.md) 참조)
 
 ---
 
@@ -81,14 +82,7 @@
 
 - `idx_shops_verification_status`: 검증 상태 기반 필터링
 
-### 7. 미디어 및 표시 (Media & Display)
-
-| 컬럼명            | 타입   | 필수 | 기본값 | 설명                                                         |
-| ----------------- | ------ | ---- | ------ | ------------------------------------------------------------ |
-| `thumbnail_url`   | text   | -    | null   | 썸네일 이미지 URL (목록 표시용)                              |
-| `cover_image_url` | text   | -    | null   | 커버 이미지 URL (상세 페이지용)                              |
-
-### 8. 관리자 메모 (Admin Notes)
+### 7. 관리자 메모 (Admin Notes)
 
 | 컬럼명        | 타입 | 필수 | 설명                                                |
 | ------------- | ---- | ---- | --------------------------------------------------- |
@@ -276,3 +270,16 @@ ORDER BY reliability_score DESC, last_confirmed_at DESC;
   }
   ```
 - **기존 데이터**: 기존 `website_url` 값은 자동으로 `{"website": "기존값"}` 형태로 마이그레이션됨
+
+### 2025-01-12: 이미지 컬럼 → shop_images 테이블 분리
+
+- **변경 내용**: `thumbnail_url`, `cover_image_url` 컬럼을 제거하고 `shop_images` 테이블로 분리
+- **목적**:
+  - 다중 이미지 업로드 지원 (상점당 여러 이미지)
+  - `display_order`를 통한 대표 이미지 설정 (1 = 대표 이미지)
+  - Supabase Storage와 연동하여 이미지 관리
+  - 향후 이미지 최적화(썸네일/풀사이즈) 처리 유연성 확보
+- **새로운 구조**:
+  - `shop_images` 테이블: 상점 이미지 저장 (id, shop_id, image_path, display_order, ...)
+  - Supabase Storage 버킷: `shop-images` (public, 10MB 제한)
+- **상세 문서**: [shop_images.md](./shop_images.md) 참조
