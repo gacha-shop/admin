@@ -1,11 +1,14 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { supabase } from "@/lib/supabase";
+import { useNavigate, Link } from "react-router-dom";
+import { useQueryClient } from "@tanstack/react-query";
+import { AdminAuthService } from "@/services/admin-auth.service";
+import { authKeys } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
 export function Login() {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -17,7 +20,7 @@ export function Login() {
     setError("");
 
     try {
-      const { data, error } = await supabase.auth.signInWithPassword({
+      const { user, error } = await AdminAuthService.signIn({
         email,
         password,
       });
@@ -26,22 +29,12 @@ export function Login() {
         throw error;
       }
 
-      // Check if user is admin
-      if (data.user) {
-        const { data: userData, error: userError } = await supabase
-          .from("users")
-          .select("role")
-          .eq("id", data.user.id)
-          .single();
-
-        if (userError || userData?.role !== "admin") {
-          await supabase.auth.signOut();
-          throw new Error("관리자 권한이 필요합니다.");
-        }
+      if (user) {
+        console.log("로그인 성공:", user);
+        // Update query cache with user data
+        queryClient.setQueryData(authKeys.current, user);
+        navigate("/");
       }
-
-      console.log("로그인 성공:", data);
-      navigate("/");
     } catch (error) {
       console.error("로그인 실패:", error);
       setError(
@@ -112,6 +105,18 @@ export function Login() {
           <Button type="submit" className="w-full" disabled={isLoading}>
             {isLoading ? "로그인 중..." : "로그인"}
           </Button>
+
+          <div className="text-center">
+            <p className="text-sm text-gray-600">
+              계정이 없으신가요?{" "}
+              <Link
+                to="/signup"
+                className="font-medium text-blue-600 hover:text-blue-500"
+              >
+                회원가입
+              </Link>
+            </p>
+          </div>
 
           <div className="text-xs text-gray-500 text-center space-y-1">
             <p>테스트 계정:</p>
