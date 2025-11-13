@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>가챠 다이어리 - 가챠맵</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="diary.css">
+</head>
+<body>
+    <!-- 헤더 -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <a href="index.html" style="display: flex; align-items: center; gap: 8px;">
+                        <span class="logo-icon">🎰</span>
+                        <span class="logo-text">가챠맵</span>
+                    </a>
+                </div>
+                <nav class="nav">
+                    <a href="map.html" class="nav-link">지도</a>
+                    <a href="community.html" class="nav-link">커뮤니티</a>
+                    <a href="diary.html" class="nav-link active">다이어리</a>
+                    <a href="mypage.html" class="nav-link">마이페이지</a>
+                    <div class="user-profile">
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" alt="프로필" class="profile-img">
+                        <span class="username">럭키캡슐마스터</span>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- 다이어리 헤더 -->
+    <div class="diary-header">
+        <div class="container">
+            <div class="header-top">
+                <h1 class="page-title">가챠 다이어리</h1>
+                <button class="add-entry-btn">➕ 새 기록 추가</button>
+            </div>
+            
+            <!-- 통계 카드 -->
+            <div class="stats-cards">
+                <div class="stat-card">
+                    <div class="stat-icon">🎯</div>
+                    <div class="stat-info">
+                        <div class="stat-label">총 뽑기 횟수</div>
+                        <div class="stat-value">247<span class="stat-unit">회</span></div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">💰</div>
+                    <div class="stat-info">
+                        <div class="stat-label">총 지출</div>
+                        <div class="stat-value">987,000<span class="stat-unit">원</span></div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">📍</div>
+                    <div class="stat-info">
+                        <div class="stat-label">방문 매장</div>
+                        <div class="stat-value">23<span class="stat-unit">곳</span></div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🎁</div>
+                    <div class="stat-info">
+                        <div class="stat-label">이번 달</div>
+                        <div class="stat-value">38<span class="stat-unit">회</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 메인 컨텐츠 -->
+    <div class="diary-content">
+        <div class="container">
+            <div class="content-layout">
+                <!-- 왼쪽: 다이어리 리스트 -->
+                <div class="diary-section">
+                    <!-- 필터 바 -->
+                    <div class="diary-filters">
+                        <select class="filter-select">
+                            <option>전체 기간</option>
+                            <option>이번 달</option>
+                            <option>지난 달</option>
+                            <option>최근 3개월</option>
+                            <option>올해</option>
+                        </select>
+                        <select class="filter-select">
+                            <option>전체 매장</option>
+                            <option>가챠오션 홍대점</option>
+                            <option>나나가챠</option>
+                            <option>JS스토어</option>
+                        </select>
+                        <select class="filter-select">
+                            <option>최신순</option>
+                            <option>오래된순</option>
+                            <option>금액순</option>
+                        </select>
+                    </div>
+
+                    <!-- 다이어리 엔트리 -->
+                    <div class="diary-entries">
+                        <!-- 2024년 11월 -->
+                        <div class="month-divider">
+                            <span class="month-label">2024년 11월</span>
+                            <span class="month-summary">15회 · 165,000원</span>
+                        </div>
+
+                        <!-- 엔트리 1 -->
+                        <div class="diary-entry">
+                            <div class="entry-date">
+                                <div class="date-day">03</div>
+                                <div class="date-month">11월</div>
+                            </div>
+                            <div class="entry-content">
+                                <div class="entry-header">
+                                    <h3 class="entry-shop">가챠오션 홍대점</h3>
+                                    <span class="entry-amount">32,000원</span>
+                                </div>
+                                <div class="entry-items">
+                                    <div class="item-tag">산리오 시나모롤</div>
+                                    <div class="item-tag">포켓몬 피카츄</div>
+                                    <div class="item-tag">+6개</div>
+                                </div>
+                                <div class="entry-meta">
+                                    <span>🎯 8회 뽑기</span>
+                                    <span>•</span>
+                                    <span>14:30</span>
+                                </div>
+                            </div>
+                            <button class="entry-more">⋯</button>
+                        </div>
+
+                        <!-- 엔트리 2 -->
+                        <div class="diary-entry">
+                            <div class="entry-date">
+                                <div class="date-day">02</div>
+                                <div class="date-month">11월</div>
+                            </div>
+                            <div class="entry-content">
+                                <div class="entry-header">
+                                    <h3 class="entry-shop">나나가챠</h3>
+                                    <span class="entry-amount">20,000원</span>
+                                </div>
+                                <div class="entry-items">
+                                    <div class="item-tag">먼작귀 Vol.2</div>
+                                    <div class="item-tag">+4개</div>
+                                </div>
+                                <div class="entry-meta">
+                                    <span>🎯 5회 뽑기</span>
+                                    <span>•</span>
+                                    <span>16:45</span>
+                                </div>
+                                <div class="entry-note">
+                                    💭 드디어 원하던 곰돌이 나왔다! 대박!!!
+                                </div>
+                            </div>
+                            <button class="entry-more">⋯</button>
+                        </div>
+
+                        <!-- 엔트리 3 -->
+                        <div class="diary-entry">
+                            <div class="entry-date">
+                                <div class="date-day">01</div>
+                                <div class="date-month">11월</div>
+                            </div>
+                            <div class="entry-content">
+                                <div class="entry-header">
+                                    <h3 class="entry-shop">JS스토어 신도림</h3>
+                                    <span class="entry-amount">60,000원</span>
+                                </div>
+                                <div class="entry-items">
+                                    <div class="item-tag">원피스 루피</div>
+                                    <div class="item-tag">명탐정 코난</div>
+                                    <div class="item-tag">짱구는 못말려</div>
+                                    <div class="item-tag">+12개</div>
+                                </div>
+                                <div class="entry-meta">
+                                    <span>🎯 15회 뽑기</span>
+                                    <span>•</span>
+                                    <span>19:20</span>
+                                </div>
+                            </div>
+                            <button class="entry-more">⋯</button>
+                        </div>
+
+                        <!-- 2024년 10월 -->
+                        <div class="month-divider">
+                            <span class="month-label">2024년 10월</span>
+                            <span class="month-summary">23회 · 276,000원</span>
+                        </div>
+
+                        <!-- 엔트리 4 -->
+                        <div class="diary-entry">
+                            <div class="entry-date">
+                                <div class="date-day">28</div>
+                                <div class="date-month">10월</div>
+                            </div>
+                            <div class="entry-content">
+                                <div class="entry-header">
+                                    <h3 class="entry-shop">쿄우마샵 강남점</h3>
+                                    <span class="entry-amount">28,000원</span>
+                                </div>
+                                <div class="entry-items">
+                                    <div class="item-tag">건담 시리즈</div>
+                                    <div class="item-tag">+6개</div>
+                                </div>
+                                <div class="entry-meta">
+                                    <span>🎯 7회 뽑기</span>
+                                    <span>•</span>
+                                    <span>15:10</span>
+                                </div>
+                            </div>
+                            <button class="entry-more">⋯</button>
+                        </div>
+
+                        <!-- 엔트리 5 -->
+                        <div class="diary-entry">
+                            <div class="entry-date">
+                                <div class="date-day">25</div>
+                                <div class="date-month">10월</div>
+                            </div>
+                            <div class="entry-content">
+                                <div class="entry-header">
+                                    <h3 class="entry-shop">별보러가챠</h3>
+                                    <span class="entry-amount">16,000원</span>
+                                </div>
+                                <div class="entry-items">
+                                    <div class="item-tag">치이카와</div>
+                                    <div class="item-tag">+3개</div>
+                                </div>
+                                <div class="entry-meta">
+                                    <span>🎯 4회 뽑기</span>
+                                    <span>•</span>
+                                    <span>13:00</span>
+                                </div>
+                                <div class="entry-note">
+                                    💭 건대 근처 카페 옆에 있어서 분위기 좋음
+                                </div>
+                            </div>
+                            <button class="entry-more">⋯</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 오른쪽: 통계 & 컬렉션 -->
+                <div class="sidebar-section">
+                    <!-- 월별 지출 그래프 -->
+                    <div class="sidebar-card">
+                        <h3 class="sidebar-title">📊 월별 지출</h3>
+                        <div class="chart-container">
+                            <div class="chart-bars">
+                                <div class="chart-bar" style="height: 60%;">
+                                    <div class="bar-fill" style="height: 100%;"></div>
+                                    <div class="bar-label">8월</div>
+                                    <div class="bar-value">142K</div>
+                                </div>
+                                <div class="chart-bar" style="height: 80%;">
+                                    <div class="bar-fill" style="height: 100%;"></div>
+                                    <div class="bar-label">9월</div>
+                                    <div class="bar-value">196K</div>
+                                </div>
+                                <div class="chart-bar" style="height: 100%;">
+                                    <div class="bar-fill" style="height: 100%;"></div>
+                                    <div class="bar-label">10월</div>
+                                    <div class="bar-value">276K</div>
+                                </div>
+                                <div class="chart-bar" style="height: 65%;">
+                                    <div class="bar-fill" style="height: 100%;"></div>
+                                    <div class="bar-label">11월</div>
+                                    <div class="bar-value">165K</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 인기 시리즈 -->
+                    <div class="sidebar-card">
+                        <h3 class="sidebar-title">❤️ 내가 가장 좋아하는</h3>
+                        <div class="favorite-series">
+                            <div class="series-item">
+                                <div class="series-rank">1</div>
+                                <div class="series-info">
+                                    <div class="series-name">산리오 캐릭터즈</div>
+                                    <div class="series-count">38회 뽑기</div>
+                                </div>
+                            </div>
+                            <div class="series-item">
+                                <div class="series-rank">2</div>
+                                <div class="series-info">
+                                    <div class="series-name">포켓몬</div>
+                                    <div class="series-count">27회 뽑기</div>
+                                </div>
+                            </div>
+                            <div class="series-item">
+                                <div class="series-rank">3</div>
+                                <div class="series-info">
+                                    <div class="series-name">원피스</div>
+                                    <div class="series-count">19회 뽑기</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 자주 가는 매장 -->
+                    <div class="sidebar-card">
+                        <h3 class="sidebar-title">📍 자주 가는 매장</h3>
+                        <div class="frequent-shops">
+                            <div class="freq-shop-item">
+                                <div class="freq-shop-name">가챠오션 홍대점</div>
+                                <div class="freq-shop-count">52회 방문</div>
+                            </div>
+                            <div class="freq-shop-item">
+                                <div class="freq-shop-name">나나가챠</div>
+                                <div class="freq-shop-count">34회 방문</div>
+                            </div>
+                            <div class="freq-shop-item">
+                                <div class="freq-shop-name">JS스토어 신도림</div>
+                                <div class="freq-shop-count">28회 방문</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 위시리스트 -->
+                    <div class="sidebar-card wishlist-card">
+                        <h3 class="sidebar-title">⭐ 위시리스트</h3>
+                        <div class="wishlist-items">
+                            <div class="wish-item">
+                                <span class="wish-emoji">🎯</span>
+                                <span class="wish-name">산리오 시나모롤 한정판</span>
+                            </div>
+                            <div class="wish-item">
+                                <span class="wish-emoji">🎯</span>
+                                <span class="wish-name">포켓몬 이브이 진화형</span>
+                            </div>
+                            <div class="wish-item">
+                                <span class="wish-emoji">🎯</span>
+                                <span class="wish-name">스밋코구라시 겨울Ver.</span>
+                            </div>
+                        </div>
+                        <button class="btn-add-wish">➕ 추가하기</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>마이페이지 - 가챠맵</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="mypage.css">
+</head>
+<body>
+    <!-- 헤더 -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <a href="index.html" style="display: flex; align-items: center; gap: 8px;">
+                        <span class="logo-icon">🎰</span>
+                        <span class="logo-text">가챠맵</span>
+                    </a>
+                </div>
+                <nav class="nav">
+                    <a href="map.html" class="nav-link">지도</a>
+                    <a href="community.html" class="nav-link">커뮤니티</a>
+                    <a href="diary.html" class="nav-link">다이어리</a>
+                    <a href="mypage.html" class="nav-link active">마이페이지</a>
+                    <div class="user-profile">
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" alt="프로필" class="profile-img">
+                        <span class="username">럭키캡슐마스터</span>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- 프로필 헤더 -->
+    <div class="profile-header">
+        <div class="container">
+            <div class="profile-info">
+                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" alt="프로필" class="profile-avatar">
+                <div class="profile-details">
+                    <div class="profile-name-section">
+                        <h1 class="profile-name">럭키캡슐마스터</h1>
+                        <button class="btn-edit-profile">✏️ 프로필 수정</button>
+                    </div>
+                    <p class="profile-bio">가챠 중독자 😍 | 산리오 덕후 💖 | 서울 가챠샵 탐방 중!</p>
+                    <div class="profile-stats">
+                        <div class="stat-item">
+                            <span class="stat-number">247</span>
+                            <span class="stat-label">뽑기</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">23</span>
+                            <span class="stat-label">방문</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">156</span>
+                            <span class="stat-label">팔로워</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">89</span>
+                            <span class="stat-label">팔로잉</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 탭 메뉴 -->
+    <div class="tabs-container">
+        <div class="container">
+            <div class="tabs">
+                <button class="tab-btn active">내 활동</button>
+                <button class="tab-btn">뱃지 & 스탬프</button>
+                <button class="tab-btn">관심 매장</button>
+                <button class="tab-btn">설정</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 메인 컨텐츠 -->
+    <div class="mypage-content">
+        <div class="container">
+            <!-- 내 활동 탭 -->
+            <div class="tab-content active">
+                <div class="content-grid">
+                    <!-- 최근 리뷰 -->
+                    <div class="activity-section">
+                        <h2 class="section-title">📝 최근 작성한 리뷰</h2>
+                        <div class="activity-list">
+                            <div class="activity-item">
+                                <div class="activity-header">
+                                    <a href="#" class="activity-shop">가챠오션 홍대점</a>
+                                    <span class="activity-date">2일 전</span>
+                                </div>
+                                <div class="activity-rating">
+                                    <span class="stars">★★★★★</span>
+                                    <span>5.0</span>
+                                </div>
+                                <p class="activity-text">
+                                    진짜 대박 매장! 신상도 빨리 들어오고 종류도 엄청 많아요...
+                                </p>
+                                <div class="activity-meta">
+                                    <span>👍 45</span>
+                                    <span>💬 12</span>
+                                </div>
+                            </div>
+                            <div class="activity-item">
+                                <div class="activity-header">
+                                    <a href="#" class="activity-shop">나나가챠</a>
+                                    <span class="activity-date">5일 전</span>
+                                </div>
+                                <div class="activity-rating">
+                                    <span class="stars">★★★★★</span>
+                                    <span>4.5</span>
+                                </div>
+                                <p class="activity-text">
+                                    성수동 숨은 보석! 친절하고 분위기도 좋아요 ㅎㅎ
+                                </p>
+                                <div class="activity-meta">
+                                    <span>👍 28</span>
+                                    <span>💬 6</span>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn-view-more">더보기</button>
+                    </div>
+
+                    <!-- 인증샷 -->
+                    <div class="activity-section">
+                        <h2 class="section-title">✨ 올린 인증샷</h2>
+                        <div class="post-grid">
+                            <div class="post-thumbnail" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                                <div class="post-overlay">
+                                    <span>❤️ 127</span>
+                                    <span>💬 15</span>
+                                </div>
+                            </div>
+                            <div class="post-thumbnail" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                                <div class="post-overlay">
+                                    <span>❤️ 89</span>
+                                    <span>💬 8</span>
+                                </div>
+                            </div>
+                            <div class="post-thumbnail" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                                <div class="post-overlay">
+                                    <span>❤️ 156</span>
+                                    <span>💬 23</span>
+                                </div>
+                            </div>
+                            <div class="post-thumbnail" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                                <div class="post-overlay">
+                                    <span>❤️ 92</span>
+                                    <span>💬 11</span>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn-view-more">더보기</button>
+                    </div>
+
+                    <!-- 제보한 매장 -->
+                    <div class="activity-section full-width">
+                        <h2 class="section-title">🏪 제보한 매장</h2>
+                        <div class="reported-shops">
+                            <div class="reported-shop-item">
+                                <div class="shop-status approved">승인됨</div>
+                                <h3 class="shop-name">토이프렌즈 신촌점</h3>
+                                <p class="shop-address">서울 서대문구 신촌역 근처</p>
+                                <p class="shop-date">제보일: 2024.10.25</p>
+                            </div>
+                            <div class="reported-shop-item">
+                                <div class="shop-status pending">검토중</div>
+                                <h3 class="shop-name">피규어천국 수원점</h3>
+                                <p class="shop-address">경기 수원시 영통구</p>
+                                <p class="shop-date">제보일: 2024.11.01</p>
+                            </div>
+                            <div class="reported-shop-item">
+                                <div class="shop-status approved">승인됨</div>
+                                <h3 class="shop-name">가챠랜드 대전점</h3>
+                                <p class="shop-address">대전 서구 둔산동</p>
+                                <p class="shop-date">제보일: 2024.10.15</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 뱃지 & 스탬프 탭 -->
+            <div class="tab-content">
+                <div class="badges-container">
+                    <div class="badges-section">
+                        <h2 class="section-title">🏆 획득한 뱃지 (8/20)</h2>
+                        <div class="badges-grid">
+                            <div class="badge-item unlocked">
+                                <div class="badge-icon">🎯</div>
+                                <div class="badge-name">첫 걸음</div>
+                                <div class="badge-desc">첫 리뷰 작성</div>
+                            </div>
+                            <div class="badge-item unlocked">
+                                <div class="badge-icon">📍</div>
+                                <div class="badge-name">탐험가</div>
+                                <div class="badge-desc">5곳 방문</div>
+                            </div>
+                            <div class="badge-item unlocked">
+                                <div class="badge-icon">❤️</div>
+                                <div class="badge-name">인기왕</div>
+                                <div class="badge-desc">100 좋아요 받기</div>
+                            </div>
+                            <div class="badge-item unlocked">
+                                <div class="badge-icon">💬</div>
+                                <div class="badge-name">수다쟁이</div>
+                                <div class="badge-desc">20개 댓글 작성</div>
+                            </div>
+                            <div class="badge-item unlocked">
+                                <div class="badge-icon">🎁</div>
+                                <div class="badge-name">컬렉터</div>
+                                <div class="badge-desc">100회 뽑기</div>
+                            </div>
+                            <div class="badge-item unlocked">
+                                <div class="badge-icon">🗺️</div>
+                                <div class="badge-name">서울 정복</div>
+                                <div class="badge-desc">서울 10곳 방문</div>
+                            </div>
+                            <div class="badge-item unlocked">
+                                <div class="badge-name">정보 공유왕</div>
+                                <div class="badge-desc">매장 3곳 제보</div>
+                            </div>
+                            <div class="badge-item unlocked">
+                                <div class="badge-icon">📸</div>
+                                <div class="badge-name">인증샷 마스터</div>
+                                <div class="badge-desc">인증샷 20개 업로드</div>
+                            </div>
+                            <div class="badge-item locked">
+                                <div class="badge-icon">🌟</div>
+                                <div class="badge-name">가챠 마스터</div>
+                                <div class="badge-desc">500회 뽑기</div>
+                            </div>
+                            <div class="badge-item locked">
+                                <div class="badge-icon">🚀</div>
+                                <div class="badge-name">전국구 덕후</div>
+                                <div class="badge-desc">3개 지역 방문</div>
+                            </div>
+                            <div class="badge-item locked">
+                                <div class="badge-icon">👑</div>
+                                <div class="badge-name">레전드</div>
+                                <div class="badge-desc">1000회 뽑기</div>
+                            </div>
+                            <div class="badge-item locked">
+                                <div class="badge-icon">💎</div>
+                                <div class="badge-name">레어템 헌터</div>
+                                <div class="badge-desc">레어템 50개 획득</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="stamps-section">
+                        <h2 class="section-title">🎫 방문 스탬프</h2>
+                        <div class="stamp-card">
+                            <div class="stamp-progress">
+                                <div class="progress-text">23 / 50 방문</div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 46%;"></div>
+                                </div>
+                            </div>
+                            <div class="stamps-grid">
+                                <div class="stamp filled">✓</div>
+                                <div class="stamp filled">✓</div>
+                                <div class="stamp filled">✓</div>
+                                <div class="stamp filled">✓</div>
+                                <div class="stamp filled">✓</div>
+                                <div class="stamp filled">✓</div>
+                                <div class="stamp filled">✓</div>
+                                <div class="stamp filled">✓</div>
+                                <div class="stamp filled">✓</div>
+                                <div class="stamp filled">✓</div>
+                                <div class="stamp empty">10</div>
+                                <div class="stamp empty"></div>
+                                <div class="stamp empty"></div>
+                                <div class="stamp empty"></div>
+                                <div class="stamp empty"></div>
+                                <div class="stamp empty">20</div>
+                                <div class="stamp empty"></div>
+                                <div class="stamp empty"></div>
+                                <div class="stamp empty"></div>
+                                <div class="stamp empty"></div>
+                                <div class="stamp empty">30</div>
+                                <div class="stamp empty"></div>
+                                <div class="stamp empty"></div>
+                                <div class="stamp empty"></div>
+                                <div class="stamp empty">50</div>
+                            </div>
+                            <p class="stamp-reward">🎁 50개 달성 시: 특별 뱃지 + 프리미엄 기능 1개월 무료!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 관심 매장 탭 -->
+            <div class="tab-content">
+                <h2 class="section-title">❤️ 관심 매장 (8)</h2>
+                <div class="favorite-shops-grid">
+                    <div class="fav-shop-card">
+                        <div class="fav-shop-image" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);"></div>
+                        <div class="fav-shop-info">
+                            <h3 class="fav-shop-name">가챠오션 홍대점</h3>
+                            <div class="fav-shop-rating">
+                                <span class="stars">★★★★★</span>
+                                <span>4.8</span>
+                            </div>
+                            <p class="fav-shop-location">📍 서울 마포구 홍대 (500m)</p>
+                        </div>
+                        <button class="btn-unfavorite">💔 삭제</button>
+                    </div>
+                    <div class="fav-shop-card">
+                        <div class="fav-shop-image" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);"></div>
+                        <div class="fav-shop-info">
+                            <h3 class="fav-shop-name">나나가챠</h3>
+                            <div class="fav-shop-rating">
+                                <span class="stars">★★★★★</span>
+                                <span>4.9</span>
+                            </div>
+                            <p class="fav-shop-location">📍 서울 성동구 성수 (750m)</p>
+                        </div>
+                        <button class="btn-unfavorite">💔 삭제</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
