@@ -3,7 +3,6 @@ import { AuthStateProvider } from "./providers/AuthStateProvider";
 import { ProtectedRoute } from "./components/auth/ProtectedRoute";
 import { MainLayout } from "./components/layout/MainLayout";
 import { Dashboard } from "./pages/Dashboard";
-import { Products } from "./pages/Products";
 import { Users } from "./pages/Users";
 import { Settings } from "./pages/Settings";
 import { Login } from "./pages/Login";
@@ -45,7 +44,6 @@ function App() {
               <Route index element={<Dashboard />} />
 
               {/* Products - Legacy */}
-              <Route path="products" element={<Products />} />
 
               {/* Gacha Shop */}
               <Route path="shops" element={<Shops />} />
@@ -53,11 +51,17 @@ function App() {
               <Route path="shops/reviews" element={<ShopReviews />} />
 
               {/* Instagram */}
-              <Route path="instagram/hashtags" element={<InstagramHashtags />} />
+              <Route
+                path="instagram/hashtags"
+                element={<InstagramHashtags />}
+              />
               <Route path="instagram/feeds" element={<InstagramFeeds />} />
 
               {/* Animation */}
-              <Route path="animation/characters" element={<AnimationCharacters />} />
+              <Route
+                path="animation/characters"
+                element={<AnimationCharacters />}
+              />
 
               {/* Admin */}
               <Route path="admin/users" element={<AdminUsers />} />
