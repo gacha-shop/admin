@@ -1,5 +1,7 @@
 import { supabase } from "@/lib/supabase";
 
+const EDGE_FUNCTION_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1`;
+
 export interface AdminUser {
   id: string;
   email: string;
@@ -11,6 +13,7 @@ export interface AdminUser {
   approved_at: string | null;
   approved_by: string | null;
   rejection_reason: string | null;
+  last_login_at: string | null;
   created_at: string;
   updated_at: string;
 }
@@ -20,6 +23,11 @@ export interface SignUpData {
   password: string;
   full_name: string;
   role?: "admin" | "owner";
+  // Owner 전용 필드
+  phone?: string;
+  shop_id?: string;
+  business_license?: string;
+  business_name?: string;
 }
 
 export interface SignInData {
@@ -29,44 +37,36 @@ export interface SignInData {
 
 /**
  * Admin user authentication service
- * Uses admin_users table for admin-specific authentication
+ * ✅ 하이브리드 아키텍처: Edge Function (비즈니스 로직) + Supabase Auth (세션 관리)
  */
 export class AdminAuthService {
   /**
    * Sign up a new admin user
+   * Edge Function으로 회원가입 처리
    */
   static async signUp(
     data: SignUpData
   ): Promise<{ user: AdminUser | null; error: Error | null }> {
     try {
-      // 1. Create auth user
-      const { data: authData, error: authError } = await supabase.auth.signUp({
-        email: data.email,
-        password: data.password,
+      // Edge Function 호출 (비즈니스 로직 처리)
+      const response = await fetch(`${EDGE_FUNCTION_URL}/admin-auth-signup`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`, // ✅ Anon Key 필수
+        },
+        body: JSON.stringify(data),
       });
 
-      if (authError) throw authError;
-      if (!authData.user) throw new Error("Failed to create user");
+      const result = await response.json();
 
-      // 2. Create admin_users record using RPC function (bypasses RLS)
-      const { data: adminUser, error: adminError } = await supabase.rpc(
-        "create_admin_user",
-        {
-          user_id: authData.user.id,
-          user_email: data.email,
-          user_full_name: data.full_name,
-          user_role: data.role || "admin",
-        }
-      );
-
-      if (adminError) {
-        console.error("Admin user creation failed:", adminError);
-        // Note: Can't delete auth user here due to auth restrictions
-        // The auth user will exist but won't have admin_users record
-        throw new Error("관리자 계정 생성에 실패했습니다. 다시 시도해주세요.");
+      if (!response.ok) {
+        throw new Error(result.error?.message || "회원가입에 실패했습니다.");
       }
 
-      return { user: adminUser, error: null };
+      // ✅ Edge Function에서 Supabase Auth로 유저 생성했으므로
+      // 클라이언트에서 자동으로 세션 생성 (Supabase Auth SDK)
+      return { user: result.data.user, error: null };
     } catch (error) {
       console.error("Sign up error:", error);
       return { user: null, error: error as Error };
@@ -75,67 +75,41 @@ export class AdminAuthService {
 
   /**
    * Sign in an admin user
+   * Edge Function으로 로그인 처리 (권한 체크, Audit 로그)
    */
   static async signIn(
     data: SignInData
   ): Promise<{ user: AdminUser | null; error: Error | null }> {
     try {
-      // 1. Authenticate with Supabase Auth
-      const { data: authData, error: authError } =
-        await supabase.auth.signInWithPassword({
-          email: data.email,
-          password: data.password,
+      // Edge Function 호출 (비즈니스 로직 처리)
+      const response = await fetch(`${EDGE_FUNCTION_URL}/admin-auth-signin`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`, // ✅ Anon Key 필수
+        },
+        body: JSON.stringify(data),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.error?.message || "로그인에 실패했습니다.");
+      }
+
+      // ✅ Edge Function에서 반환한 세션을 클라이언트에 설정
+      if (result.data.session) {
+        const { error: sessionError } = await supabase.auth.setSession({
+          access_token: result.data.session.access_token,
+          refresh_token: result.data.session.refresh_token,
         });
 
-      if (authError) throw authError;
-      if (!authData.user) throw new Error("Authentication failed");
-
-      // 2. Check if user exists in admin_users table
-      const { data: adminUser, error: adminError } = await supabase
-        .from("admin_users")
-        .select("*")
-        .eq("id", authData.user.id)
-        .single();
-
-      console.log("adminUseradminUseradminUser", adminUser);
-
-      if (adminError || !adminUser) {
-        // User is not an admin, sign them out
-        await supabase.auth.signOut();
-        throw new Error("관리자 권한이 필요합니다.");
+        if (sessionError) {
+          throw new Error("세션 설정에 실패했습니다.");
+        }
       }
 
-      // 3. Check if user is active
-      if (adminUser.status !== "active") {
-        await supabase.auth.signOut();
-        throw new Error("계정이 비활성화되었습니다. 관리자에게 문의하세요.");
-      }
-
-      // 4. Check approval status
-      if (adminUser.approval_status === "pending") {
-        await supabase.auth.signOut();
-        throw new Error(
-          "계정 승인 대기 중입니다. 슈퍼 관리자의 승인을 기다려주세요."
-        );
-      }
-
-      if (adminUser.approval_status === "rejected") {
-        await supabase.auth.signOut();
-        const reason = adminUser.rejection_reason
-          ? `\n사유: ${adminUser.rejection_reason}`
-          : "";
-        throw new Error(`계정이 거부되었습니다.${reason}`);
-      }
-
-      // 4. Update last login info
-      await supabase
-        .from("admin_users")
-        .update({
-          last_login_at: new Date().toISOString(),
-        })
-        .eq("id", authData.user.id);
-
-      return { user: adminUser, error: null };
+      return { user: result.data.user, error: null };
     } catch (error) {
       console.error("Sign in error:", error);
       return { user: null, error: error as Error };
