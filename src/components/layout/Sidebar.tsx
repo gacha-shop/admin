@@ -69,7 +69,7 @@ const baseMenuItems: MenuItem[] = [
     icon: Shield,
     subItems: [
       { path: "/admin/users", label: "어드민 유저 관리" },
-      { path: "/admin/permissions", label: "어드민 권한 관리" },
+      { path: "/admin/permissions", label: "어드민 메뉴 권한 관리" },
     ],
   },
   {

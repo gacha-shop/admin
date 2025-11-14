@@ -30,7 +30,10 @@ import CommunityPosts from "./pages/CommunityPosts";
 
 // Owner
 import OwnerDashboard from "./pages/OwnerDashboard";
-import OwnerStores from "./pages/OwnerStores";
+import { OwnerStores } from "./pages/owner/OwnerStores";
+
+// Test
+import TestEdgeFunctions from "./pages/TestEdgeFunctions";
 
 function App() {
   return (
@@ -77,6 +80,9 @@ function App() {
               {/* Owner */}
               <Route path="owner/dashboard" element={<OwnerDashboard />} />
               <Route path="owner/stores" element={<OwnerStores />} />
+
+              {/* Test */}
+              <Route path="test/edge-functions" element={<TestEdgeFunctions />} />
 
               {/* Settings */}
               <Route path="settings" element={<Settings />} />
