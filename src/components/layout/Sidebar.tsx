@@ -51,43 +51,43 @@ const baseMenuItems: MenuItem[] = [
       { path: "/shops/reviews", label: "샵 리뷰 관리" },
     ],
   },
-  {
-    label: "인스타그램",
-    icon: Instagram,
-    subItems: [
-      { path: "/instagram/hashtags", label: "해시태그 관리" },
-      { path: "/instagram/feeds", label: "피드 관리" },
-    ],
-  },
-  {
-    label: "애니메이션",
-    icon: Sparkles,
-    subItems: [{ path: "/animation/characters", label: "캐릭터 관리" }],
-  },
+  // {
+  //   label: "인스타그램",
+  //   icon: Instagram,
+  //   subItems: [
+  //     { path: "/instagram/hashtags", label: "해시태그 관리" },
+  //     { path: "/instagram/feeds", label: "피드 관리" },
+  //   ],
+  // },
+  // {
+  //   label: "애니메이션",
+  //   icon: Sparkles,
+  //   subItems: [{ path: "/animation/characters", label: "캐릭터 관리" }],
+  // },
   {
     label: "어드민",
     icon: Shield,
     subItems: [
       { path: "/admin/users", label: "어드민 유저 관리" },
-      { path: "/admin/permissions", label: "어드민 메뉴 권한 관리" },
+      // { path: "/admin/permissions", label: "어드민 메뉴 권한 관리" },
     ],
   },
-  {
-    label: "유저",
-    icon: Users,
-    subItems: [{ path: "/users", label: "사용 유저 관리" }],
-  },
-  {
-    label: "커뮤니티",
-    icon: MessageSquare,
-    subItems: [{ path: "/community/posts", label: "게시글 관리" }],
-  },
+  // {
+  //   label: "유저",
+  //   icon: Users,
+  //   subItems: [{ path: "/users", label: "사용 유저 관리" }],
+  // },
+  // {
+  //   label: "커뮤니티",
+  //   icon: MessageSquare,
+  //   subItems: [{ path: "/community/posts", label: "게시글 관리" }],
+  // },
   {
     label: "사장님",
     icon: Briefcase,
     subItems: [
       { path: "/owner/dashboard", label: "사장님 대시보드" },
-      { path: "/owner/stores", label: "매장별 관리" },
+      // { path: "/owner/stores", label: "매장별 관리" },
     ],
   },
   {
@@ -96,11 +96,11 @@ const baseMenuItems: MenuItem[] = [
     path: "/admin-approvals",
     requiresSuperAdmin: true,
   },
-  {
-    label: "설정 및 API",
-    icon: Settings,
-    path: "/settings",
-  },
+  // {
+  //   label: "설정 및 API",
+  //   icon: Settings,
+  //   path: "/settings",
+  // },
 ];
 
 export function Sidebar() {

@@ -128,7 +128,7 @@ export interface ApiResponse<T = unknown> {
 /**
  * Edge Functions API 호출을 위한 헬퍼 함수
  */
-async function callEdgeFunction<T>(
+export async function callEdgeFunction<T>(
   endpoint: string,
   options: RequestInit = {}
 ): Promise<T> {
