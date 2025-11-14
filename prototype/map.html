@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>지도 - 가챠맵</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="map.css">
+</head>
+<body>
+    <!-- 헤더 -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <a href="index.html" style="display: flex; align-items: center; gap: 8px;">
+                        <span class="logo-icon">🎰</span>
+                        <span class="logo-text">가챠맵</span>
+                    </a>
+                </div>
+                <nav class="nav">
+                    <a href="map.html" class="nav-link active">지도</a>
+                    <a href="community.html" class="nav-link">커뮤니티</a>
+                    <a href="diary.html" class="nav-link">다이어리</a>
+                    <a href="mypage.html" class="nav-link">마이페이지</a>
+                    <div class="user-profile">
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" alt="프로필" class="profile-img">
+                        <span class="username">럭키캡슐마스터</span>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- 검색 바 -->
+    <div class="search-bar-container">
+        <div class="container">
+            <div class="search-bar">
+                <input type="text" class="search-input" placeholder="매장명, 지역, 상품으로 검색...">
+                <button class="search-button">🔍 검색</button>
+                <button class="filter-button">⚙️ 필터</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 필터 패널 -->
+    <div class="filter-panel">
+        <div class="container">
+            <div class="filter-content">
+                <div class="filter-group">
+                    <label class="filter-label">매장 타입</label>
+                    <div class="filter-options">
+                        <label class="checkbox-label">
+                            <input type="checkbox" checked> 가챠샵
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" checked> 피규어샵
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" checked> 복합매장
+                        </label>
+                    </div>
+                </div>
+                <div class="filter-group">
+                    <label class="filter-label">결제 방식</label>
+                    <div class="filter-options">
+                        <label class="checkbox-label">
+                            <input type="checkbox" checked> 현금
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" checked> 카드
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" checked> 전용코인
+                        </label>
+                    </div>
+                </div>
+                <div class="filter-group">
+                    <label class="filter-label">영업 상태</label>
+                    <div class="filter-options">
+                        <label class="checkbox-label">
+                            <input type="checkbox" checked> 영업중
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox"> 전체
+                        </label>
+                    </div>
+                </div>
+                <div class="filter-actions">
+                    <button class="btn-reset">초기화</button>
+                    <button class="btn-apply">적용</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 메인 컨텐츠 -->
+    <div class="map-container">
+        <div class="container-fluid">
+            <div class="map-layout">
+                <!-- 지도 영역 -->
+                <div class="map-area">
+                    <div class="map-placeholder">
+                        <!-- 실제로는 카카오맵/구글맵 API가 들어갈 영역 -->
+                        <div class="map-overlay">
+                            <div class="map-marker" style="top: 30%; left: 20%;">
+                                <div class="marker-icon">📍</div>
+                            </div>
+                            <div class="map-marker" style="top: 45%; left: 40%;">
+                                <div class="marker-icon">📍</div>
+                            </div>
+                            <div class="map-marker" style="top: 60%; left: 65%;">
+                                <div class="marker-icon">📍</div>
+                            </div>
+                            <div class="map-marker" style="top: 25%; left: 75%;">
+                                <div class="marker-icon">📍</div>
+                            </div>
+                            <div class="map-marker" style="top: 70%; left: 30%;">
+                                <div class="marker-icon">📍</div>
+                            </div>
+                        </div>
+                        <div class="map-controls">
+                            <button class="map-control-btn">🎯 내 위치</button>
+                            <button class="map-control-btn">➕</button>
+                            <button class="map-control-btn">➖</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 매장 리스트 -->
+                <div class="shop-list-area">
+                    <div class="list-header">
+                        <h3 class="list-title">근처 매장 <span class="count">15</span></h3>
+                        <select class="sort-select">
+                            <option>거리순</option>
+                            <option>별점순</option>
+                            <option>리뷰순</option>
+                            <option>최신순</option>
+                        </select>
+                    </div>
+                    
+                    <div class="shop-list">
+                        <!-- 매장 아이템 1 -->
+                        <div class="shop-item">
+                            <div class="shop-item-image" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);"></div>
+                            <div class="shop-item-content">
+                                <div class="shop-item-header">
+                                    <h4 class="shop-item-name">가챠오션 홍대점</h4>
+                                    <button class="btn-favorite">❤️</button>
+                                </div>
+                                <div class="shop-item-rating">
+                                    <span class="stars">★★★★★</span>
+                                    <span class="rating-text">4.8 (128)</span>
+                                    <span class="badge-open">영업중</span>
+                                </div>
+                                <p class="shop-item-location">📍 서울 마포구 홍대입구역 2번 출구 도보 3분 (500m)</p>
+                                <div class="shop-item-tags">
+                                    <span class="tag">카드결제</span>
+                                    <span class="tag">주차가능</span>
+                                    <span class="tag">신상품다양</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 매장 아이템 2 -->
+                        <div class="shop-item">
+                            <div class="shop-item-image" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);"></div>
+                            <div class="shop-item-content">
+                                <div class="shop-item-header">
+                                    <h4 class="shop-item-name">나나가챠</h4>
+                                    <button class="btn-favorite active">❤️</button>
+                                </div>
+                                <div class="shop-item-rating">
+                                    <span class="stars">★★★★★</span>
+                                    <span class="rating-text">4.9 (95)</span>
+                                    <span class="badge-open">영업중</span>
+                                </div>
+                                <p class="shop-item-location">📍 서울 성동구 성수역 3번 출구 도보 5분 (750m)</p>
+                                <div class="shop-item-tags">
+                                    <span class="tag">현금전용</span>
+                                    <span class="tag">레어템多</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 매장 아이템 3 -->
+                        <div class="shop-item">
+                            <div class="shop-item-image" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);"></div>
+                            <div class="shop-item-content">
+                                <div class="shop-item-header">
+                                    <h4 class="shop-item-name">JS스토어 신도림</h4>
+                                    <button class="btn-favorite">🤍</button>
+                                </div>
+                                <div class="shop-item-rating">
+                                    <span class="stars">★★★★☆</span>
+                                    <span class="rating-text">4.7 (156)</span>
+                                    <span class="badge-open">영업중</span>
+                                </div>
+                                <p class="shop-item-location">📍 서울 구로구 신도림역 D-CUBE 백화점 근처 (1.2km)</p>
+                                <div class="shop-item-tags">
+                                    <span class="tag">카드결제</span>
+                                    <span class="tag">대형매장</span>
+                                    <span class="tag">100대이상</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 매장 아이템 4 -->
+                        <div class="shop-item">
+                            <div class="shop-item-image" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);"></div>
+                            <div class="shop-item-content">
+                                <div class="shop-item-header">
+                                    <h4 class="shop-item-name">쿄우마샵 강남점</h4>
+                                    <button class="btn-favorite">🤍</button>
+                                </div>
+                                <div class="shop-item-rating">
+                                    <span class="stars">★★★★★</span>
+                                    <span class="rating-text">4.8 (87)</span>
+                                    <span class="badge-closed">영업종료</span>
+                                </div>
+                                <p class="shop-item-location">📍 서울 서초구 국제전자센터 11층 (1.8km)</p>
+                                <div class="shop-item-tags">
+                                    <span class="tag">피규어전문</span>
+                                    <span class="tag">중고매입</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 매장 아이템 5 -->
+                        <div class="shop-item">
+                            <div class="shop-item-image" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);"></div>
+                            <div class="shop-item-content">
+                                <div class="shop-item-header">
+                                    <h4 class="shop-item-name">별보러가챠</h4>
+                                    <button class="btn-favorite">🤍</button>
+                                </div>
+                                <div class="shop-item-rating">
+                                    <span class="stars">★★★★☆</span>
+                                    <span class="rating-text">4.6 (64)</span>
+                                    <span class="badge-open">영업중</span>
+                                </div>
+                                <p class="shop-item-location">📍 서울 광진구 건국대역 5번 출구 근처 (2.1km)</p>
+                                <div class="shop-item-tags">
+                                    <span class="tag">카드결제</span>
+                                    <span class="tag">카페병설</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 매장 제보 버튼 (플로팅) -->
+    <button class="fab-button">
+        ➕ 매장 제보하기
+    </button>
+</body>
+</html>

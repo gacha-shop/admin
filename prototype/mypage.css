@@ -1,0 +1,513 @@
+/* 마이페이지 전용 스타일 */
+
+.profile-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 48px 0;
+  color: white;
+}
+
+.profile-info {
+  display: flex;
+  gap: 32px;
+  align-items: center;
+}
+
+.profile-avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 4px solid white;
+  box-shadow: var(--shadow-lg);
+}
+
+.profile-details {
+  flex: 1;
+}
+
+.profile-name-section {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+
+.profile-name {
+  font-size: 32px;
+  font-weight: 700;
+}
+
+.btn-edit-profile {
+  padding: 8px 20px;
+  background: rgba(255, 255, 255, 0.2);
+  border: 2px solid white;
+  border-radius: 8px;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.btn-edit-profile:hover {
+  background: white;
+  color: var(--primary-color);
+}
+
+.profile-bio {
+  font-size: 16px;
+  margin-bottom: 24px;
+  opacity: 0.95;
+}
+
+.profile-stats {
+  display: flex;
+  gap: 40px;
+}
+
+.profile-stats .stat-item {
+  text-align: center;
+}
+
+.profile-stats .stat-number {
+  display: block;
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.profile-stats .stat-label {
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+/* 탭 컨테이너 */
+.tabs-container {
+  background: white;
+  border-bottom: 1px solid var(--border-color);
+  position: sticky;
+  top: 73px;
+  z-index: 50;
+}
+
+.tabs {
+  display: flex;
+  gap: 8px;
+}
+
+.tabs .tab-btn {
+  padding: 16px 24px;
+  background: none;
+  border: none;
+  border-bottom: 3px solid transparent;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-gray);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.tabs .tab-btn:hover {
+  color: var(--primary-color);
+}
+
+.tabs .tab-btn.active {
+  color: var(--primary-color);
+  border-bottom-color: var(--primary-color);
+}
+
+/* 컨텐츠 */
+.mypage-content {
+  background: var(--bg-light);
+  min-height: 600px;
+  padding: 32px 0;
+}
+
+.tab-content {
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+.content-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.activity-section {
+  background: white;
+  border-radius: var(--border-radius);
+  padding: 24px;
+  box-shadow: var(--shadow-sm);
+}
+
+.activity-section.full-width {
+  grid-column: 1 / -1;
+}
+
+.section-title {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.activity-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.activity-item {
+  padding: 16px;
+  background: var(--bg-light);
+  border-radius: 8px;
+}
+
+.activity-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.activity-shop {
+  font-weight: 600;
+  color: var(--primary-color);
+}
+
+.activity-date {
+  font-size: 13px;
+  color: var(--text-gray);
+}
+
+.activity-rating {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.activity-text {
+  font-size: 14px;
+  color: var(--text-gray);
+  margin-bottom: 12px;
+}
+
+.activity-meta {
+  display: flex;
+  gap: 16px;
+  font-size: 13px;
+  color: var(--text-gray);
+}
+
+.post-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.post-thumbnail {
+  aspect-ratio: 1;
+  border-radius: 8px;
+  position: relative;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.post-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 12px;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+  color: white;
+  font-size: 13px;
+  display: flex;
+  gap: 12px;
+  opacity: 0;
+  transition: var(--transition);
+}
+
+.post-thumbnail:hover .post-overlay {
+  opacity: 1;
+}
+
+.btn-view-more {
+  width: 100%;
+  padding: 10px;
+  background: none;
+  border: 2px dashed var(--border-color);
+  border-radius: 8px;
+  font-weight: 600;
+  color: var(--text-gray);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.btn-view-more:hover {
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+}
+
+.reported-shops {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.reported-shop-item {
+  padding: 20px;
+  background: var(--bg-light);
+  border-radius: 8px;
+  position: relative;
+}
+
+.shop-status {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.shop-status.approved {
+  background: var(--success-color);
+  color: white;
+}
+
+.shop-status.pending {
+  background: var(--warning-color);
+  color: white;
+}
+
+.shop-name {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.shop-address,
+.shop-date {
+  font-size: 13px;
+  color: var(--text-gray);
+  margin-bottom: 4px;
+}
+
+/* 뱃지 */
+.badges-container {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.badges-section {
+  background: white;
+  border-radius: var(--border-radius);
+  padding: 32px;
+  box-shadow: var(--shadow-sm);
+}
+
+.badges-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.badge-item {
+  text-align: center;
+  padding: 20px;
+  background: var(--bg-light);
+  border-radius: 12px;
+  transition: var(--transition);
+}
+
+.badge-item.locked {
+  opacity: 0.4;
+}
+
+.badge-item:hover:not(.locked) {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+
+.badge-icon {
+  font-size: 48px;
+  margin-bottom: 12px;
+}
+
+.badge-name {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.badge-desc {
+  font-size: 12px;
+  color: var(--text-gray);
+}
+
+.stamps-section {
+  background: white;
+  border-radius: var(--border-radius);
+  padding: 32px;
+  box-shadow: var(--shadow-sm);
+}
+
+.stamp-card {
+  background: var(--bg-light);
+  padding: 24px;
+  border-radius: 12px;
+}
+
+.stamp-progress {
+  margin-bottom: 20px;
+}
+
+.progress-text {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.progress-bar {
+  height: 8px;
+  background: white;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--primary-color);
+  transition: var(--transition);
+}
+
+.stamps-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.stamp {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.stamp.filled {
+  background: var(--primary-color);
+  color: white;
+}
+
+.stamp.empty {
+  background: white;
+  color: var(--text-light);
+  font-size: 12px;
+}
+
+.stamp-reward {
+  text-align: center;
+  font-size: 14px;
+  color: var(--primary-color);
+  font-weight: 600;
+}
+
+.favorite-shops-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.fav-shop-card {
+  background: white;
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+.fav-shop-image {
+  height: 140px;
+}
+
+.fav-shop-info {
+  padding: 16px;
+}
+
+.fav-shop-name {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.fav-shop-rating {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.fav-shop-location {
+  font-size: 13px;
+  color: var(--text-gray);
+}
+
+.btn-unfavorite {
+  width: 100%;
+  padding: 10px;
+  background: none;
+  border: none;
+  border-top: 1px solid var(--border-color);
+  color: var(--text-gray);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.btn-unfavorite:hover {
+  background: var(--bg-light);
+  color: var(--danger-color);
+}
+
+@media (max-width: 1024px) {
+  .content-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .badges-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .favorite-shops-grid,
+  .reported-shops {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .profile-info {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .profile-name {
+    font-size: 24px;
+  }
+
+  .badges-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .stamps-grid {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+  }
+}

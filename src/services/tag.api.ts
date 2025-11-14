@@ -22,7 +22,7 @@ export async function getTags(): Promise<Tag[]> {
     data: { session },
   } = await supabase.auth.getSession();
 
-  const response = await fetch(`${EDGE_FUNCTION_URL}/functions/v1/admin-tags`, {
+  const response = await fetch(`${EDGE_FUNCTION_URL}/functions/v1/admin-tags-list`, {
     method: 'GET',
     headers: {
       Authorization: `Bearer ${session?.access_token || ''}`,
@@ -36,39 +36,71 @@ export async function getTags(): Promise<Tag[]> {
   }
 
   const result = await response.json();
-  return result.data;
+
+  // Edge Function returns: { success, data: Tag[] }
+  if (result.success && result.data) {
+    return result.data;
+  }
+
+  throw new Error('Invalid response format');
 }
 
 /**
  * Create a new tag
  */
 export async function createTag(dto: CreateTagDto): Promise<Tag> {
-  const { data, error } = await supabase.functions.invoke('admin-tags', {
+  const { data, error } = await supabase.functions.invoke('admin-tags-create', {
     body: dto,
-    method: 'POST',
   });
 
   if (error) {
     throw new Error(error.message || 'Failed to create tag');
   }
 
-  return data;
+  // Edge Function returns: { success, data: Tag }
+  if (data?.success && data?.data) {
+    return data.data;
+  }
+
+  throw new Error('Invalid response format');
 }
 
 /**
  * Update an existing tag
  */
 export async function updateTag(dto: UpdateTagDto): Promise<Tag> {
-  const { data, error } = await supabase.functions.invoke('admin-tags', {
-    body: dto,
-    method: 'PUT',
-  });
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
 
-  if (error) {
-    throw new Error(error.message || 'Failed to update tag');
+  const response = await fetch(
+    `${EDGE_FUNCTION_URL}/functions/v1/admin-tags-update?id=${dto.id}`,
+    {
+      method: 'PUT',
+      headers: {
+        Authorization: `Bearer ${session?.access_token || ''}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        name: dto.name,
+        description: dto.description,
+      }),
+    }
+  );
+
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.error || 'Failed to update tag');
   }
 
-  return data;
+  const result = await response.json();
+
+  // Edge Function returns: { success, data: Tag }
+  if (result.success && result.data) {
+    return result.data;
+  }
+
+  throw new Error('Invalid response format');
 }
 
 /**
@@ -80,7 +112,7 @@ export async function deleteTag(id: string): Promise<void> {
   } = await supabase.auth.getSession();
 
   const response = await fetch(
-    `${EDGE_FUNCTION_URL}/functions/v1/admin-tags?id=${id}`,
+    `${EDGE_FUNCTION_URL}/functions/v1/admin-tags-delete?id=${id}`,
     {
       method: 'DELETE',
       headers: {

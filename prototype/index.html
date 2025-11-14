@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>가챠맵 - 전국 가챠샵 & 피규어샵 지도</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- 헤더 -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <span class="logo-icon">🎰</span>
+                    <span class="logo-text">가챠맵</span>
+                </div>
+                <nav class="nav">
+                    <a href="map.html" class="nav-link">지도</a>
+                    <a href="community.html" class="nav-link">커뮤니티</a>
+                    <a href="diary.html" class="nav-link">다이어리</a>
+                    <a href="login.html" class="btn-login">로그인</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- 히어로 섹션 -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    전국 가챠샵을<br>
+                    한눈에 찾아보세요
+                </h1>
+                <p class="hero-subtitle">
+                    흩어진 정보는 이제 그만! 가챠맵에서 내 주변 가챠샵과 피규어샵을<br>
+                    쉽게 찾고, 리뷰를 공유하고, 나만의 컬렉션을 기록하세요.
+                </p>
+                <div class="hero-buttons">
+                    <a href="map.html" class="btn-primary">지도 보기</a>
+                    <a href="signup.html" class="btn-secondary">시작하기</a>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">150+</div>
+                        <div class="stat-label">등록된 매장</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">2,500+</div>
+                        <div class="stat-label">리뷰</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">5,000+</div>
+                        <div class="stat-label">덕후들</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 기능 소개 -->
+    <section class="features">
+        <div class="container">
+            <h2 class="section-title">왜 가챠맵일까요?</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🗺️</div>
+                    <h3 class="feature-title">지도 기반 검색</h3>
+                    <p class="feature-description">
+                        내 주변의 가챠샵을 지도에서 한눈에 확인하고, 
+                        거리순으로 가장 가까운 매장을 찾아보세요.
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⭐</div>
+                    <h3 class="feature-title">리뷰 & 인증샷</h3>
+                    <p class="feature-description">
+                        다른 덕후들의 솔직한 리뷰를 보고, 
+                        나만의 전리품 인증샷을 공유하세요.
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📔</div>
+                    <h3 class="feature-title">가챠 다이어리</h3>
+                    <p class="feature-description">
+                        언제, 어디서, 무엇을 뽑았는지 기록하고 
+                        나만의 컬렉션을 관리하세요.
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🏆</div>
+                    <h3 class="feature-title">스탬프 & 뱃지</h3>
+                    <p class="feature-description">
+                        매장을 방문하고 뱃지를 모으며 
+                        진정한 가챠 마스터가 되어보세요.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 인기 매장 미리보기 -->
+    <section class="popular-shops">
+        <div class="container">
+            <h2 class="section-title">인기 매장 TOP 5</h2>
+            <div class="shops-grid">
+                <div class="shop-card">
+                    <div class="shop-image" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);"></div>
+                    <div class="shop-info">
+                        <h3 class="shop-name">가챠오션 홍대점</h3>
+                        <div class="shop-rating">
+                            <span class="stars">★★★★★</span>
+                            <span class="rating-text">4.8 (128)</span>
+                        </div>
+                        <p class="shop-location">📍 서울 마포구 홍대</p>
+                    </div>
+                </div>
+                <div class="shop-card">
+                    <div class="shop-image" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);"></div>
+                    <div class="shop-info">
+                        <h3 class="shop-name">나나가챠</h3>
+                        <div class="shop-rating">
+                            <span class="stars">★★★★★</span>
+                            <span class="rating-text">4.9 (95)</span>
+                        </div>
+                        <p class="shop-location">📍 서울 성동구 성수동</p>
+                    </div>
+                </div>
+                <div class="shop-card">
+                    <div class="shop-image" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);"></div>
+                    <div class="shop-info">
+                        <h3 class="shop-name">JS스토어 신도림</h3>
+                        <div class="shop-rating">
+                            <span class="stars">★★★★☆</span>
+                            <span class="rating-text">4.7 (156)</span>
+                        </div>
+                        <p class="shop-location">📍 서울 구로구 신도림</p>
+                    </div>
+                </div>
+                <div class="shop-card">
+                    <div class="shop-image" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);"></div>
+                    <div class="shop-info">
+                        <h3 class="shop-name">쿄우마샵 강남점</h3>
+                        <div class="shop-rating">
+                            <span class="stars">★★★★★</span>
+                            <span class="rating-text">4.8 (87)</span>
+                        </div>
+                        <p class="shop-location">📍 서울 서초구 서초동</p>
+                    </div>
+                </div>
+                <div class="shop-card">
+                    <div class="shop-image" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);"></div>
+                    <div class="shop-info">
+                        <h3 class="shop-name">토이친구 부산점</h3>
+                        <div class="shop-rating">
+                            <span class="stars">★★★★☆</span>
+                            <span class="rating-text">4.6 (73)</span>
+                        </div>
+                        <p class="shop-location">📍 부산 해운대구</p>
+                    </div>
+                </div>
+            </div>
+            <div class="section-cta">
+                <a href="map.html" class="btn-primary">모든 매장 보기</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA 섹션 -->
+    <section class="cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2 class="cta-title">지금 바로 시작하세요!</h2>
+                <p class="cta-subtitle">가챠맵과 함께 즐거운 덕질 라이프를 시작해보세요</p>
+                <a href="signup.html" class="btn-primary btn-large">무료로 시작하기</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 푸터 -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="logo">
+                        <span class="logo-icon">🎰</span>
+                        <span class="logo-text">가챠맵</span>
+                    </div>
+                    <p class="footer-description">
+                        전국의 가챠샵과 피규어샵을<br>
+                        한눈에 찾아보는 덕후들의 지도
+                    </p>
+                </div>
+                <div class="footer-section">
+                    <h4 class="footer-title">서비스</h4>
+                    <ul class="footer-links">
+                        <li><a href="map.html">지도</a></li>
+                        <li><a href="community.html">커뮤니티</a></li>
+                        <li><a href="diary.html">다이어리</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4 class="footer-title">지원</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">공지사항</a></li>
+                        <li><a href="#">문의하기</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4 class="footer-title">정책</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">이용약관</a></li>
+                        <li><a href="#">개인정보처리방침</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 가챠맵. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

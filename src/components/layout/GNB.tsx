@@ -1,16 +1,27 @@
-import { useNavigate } from 'react-router-dom';
-import { supabase } from '@/lib/supabase';
+import { useAuth } from '@/hooks/useAuth';
 import { Button } from '@/components/ui/button';
 
 export function GNB() {
-  const navigate = useNavigate();
+  const { user, signOut } = useAuth();
 
   const handleLogout = async () => {
     try {
-      await supabase.auth.signOut();
-      navigate('/login');
+      await signOut();
     } catch (error) {
       console.error('로그아웃 실패:', error);
+    }
+  };
+
+  const getRoleLabel = (role: string) => {
+    switch (role) {
+      case 'super_admin':
+        return '슈퍼 관리자';
+      case 'admin':
+        return '관리자';
+      case 'owner':
+        return '사장님';
+      default:
+        return role;
     }
   };
 
@@ -23,7 +34,14 @@ export function GNB() {
           </h1>
         </div>
         <div className="flex items-center gap-4">
-          <span className="text-sm text-gray-600">관리자</span>
+          {user && (
+            <div className="text-sm text-gray-600 flex flex-col items-end">
+              <span className="font-medium">{user.full_name || user.email}</span>
+              <span className="text-xs text-gray-500">
+                {getRoleLabel(user.role)}
+              </span>
+            </div>
+          )}
           <Button variant="outline" size="sm" onClick={handleLogout}>
             로그아웃
           </Button>

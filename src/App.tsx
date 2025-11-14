@@ -1,69 +1,95 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { MainLayout } from './components/layout/MainLayout';
-import { Dashboard } from './pages/Dashboard';
-import { Login } from './pages/Login';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { AuthStateProvider } from "./providers/AuthStateProvider";
+import { ProtectedRoute } from "./components/auth/ProtectedRoute";
+import { MainLayout } from "./components/layout/MainLayout";
+import { Dashboard } from "./pages/Dashboard";
+import { Users } from "./pages/Users";
+import { Settings } from "./pages/Settings";
+import { Login } from "./pages/Login";
+import { SignUp } from "./pages/SignUp";
+import { AdminApprovals } from "./pages/AdminApprovals";
 
 // Gacha Shop
-import Shops from './pages/Shops';
-import Tags from './pages/Tags';
-import ShopReviews from './pages/ShopReviews';
+import Shops from "./pages/Shops";
+import Tags from "./pages/Tags";
+import ShopReviews from "./pages/ShopReviews";
 
 // Instagram
-import InstagramHashtags from './pages/InstagramHashtags';
-import InstagramFeeds from './pages/InstagramFeeds';
+import InstagramHashtags from "./pages/InstagramHashtags";
+import InstagramFeeds from "./pages/InstagramFeeds";
 
 // Animation
-import AnimationCharacters from './pages/AnimationCharacters';
+import AnimationCharacters from "./pages/AnimationCharacters";
 
 // Admin
-import AdminUsers from './pages/AdminUsers';
-import AdminPermissions from './pages/AdminPermissions';
-
-// User
-import { Users } from './pages/Users';
+import AdminUsers from "./pages/AdminUsers";
+import AdminPermissions from "./pages/AdminPermissions";
 
 // Community
-import CommunityPosts from './pages/CommunityPosts';
+import CommunityPosts from "./pages/CommunityPosts";
 
 // Owner
-import OwnerDashboard from './pages/OwnerDashboard';
-import OwnerStores from './pages/OwnerStores';
+import OwnerDashboard from "./pages/OwnerDashboard";
+import { OwnerStores } from "./pages/owner/OwnerStores";
+
+// Test
+import TestEdgeFunctions from "./pages/TestEdgeFunctions";
 
 function App() {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path='/login' element={<Login />} />
-        <Route path='/' element={<MainLayout />}>
-          <Route index element={<Dashboard />} />
+      <AuthStateProvider>
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route element={<ProtectedRoute />}>
+            <Route path="/" element={<MainLayout />}>
+              <Route index element={<Dashboard />} />
 
-          {/* Gacha Shop */}
-          <Route path='shops' element={<Shops />} />
-          <Route path='shops/tags' element={<Tags />} />
-          <Route path='shops/reviews' element={<ShopReviews />} />
+              {/* Products - Legacy */}
 
-          {/* Instagram */}
-          <Route path='instagram/hashtags' element={<InstagramHashtags />} />
-          <Route path='instagram/feeds' element={<InstagramFeeds />} />
+              {/* Gacha Shop */}
+              <Route path="shops" element={<Shops />} />
+              <Route path="shops/tags" element={<Tags />} />
+              <Route path="shops/reviews" element={<ShopReviews />} />
 
-          {/* Animation */}
-          <Route path='animation/characters' element={<AnimationCharacters />} />
+              {/* Instagram */}
+              <Route
+                path="instagram/hashtags"
+                element={<InstagramHashtags />}
+              />
+              <Route path="instagram/feeds" element={<InstagramFeeds />} />
 
-          {/* Admin */}
-          <Route path='admin/users' element={<AdminUsers />} />
-          <Route path='admin/permissions' element={<AdminPermissions />} />
+              {/* Animation */}
+              <Route
+                path="animation/characters"
+                element={<AnimationCharacters />}
+              />
 
-          {/* User */}
-          <Route path='users' element={<Users />} />
+              {/* Admin */}
+              <Route path="admin/users" element={<AdminUsers />} />
+              <Route path="admin/permissions" element={<AdminPermissions />} />
+              <Route path="admin-approvals" element={<AdminApprovals />} />
 
-          {/* Community */}
-          <Route path='community/posts' element={<CommunityPosts />} />
+              {/* User */}
+              <Route path="users" element={<Users />} />
 
-          {/* Owner */}
-          <Route path='owner/dashboard' element={<OwnerDashboard />} />
-          <Route path='owner/stores' element={<OwnerStores />} />
-        </Route>
-      </Routes>
+              {/* Community */}
+              <Route path="community/posts" element={<CommunityPosts />} />
+
+              {/* Owner */}
+              <Route path="owner/dashboard" element={<OwnerDashboard />} />
+              <Route path="owner/stores" element={<OwnerStores />} />
+
+              {/* Test */}
+              <Route path="test/edge-functions" element={<TestEdgeFunctions />} />
+
+              {/* Settings */}
+              <Route path="settings" element={<Settings />} />
+            </Route>
+          </Route>
+        </Routes>
+      </AuthStateProvider>
     </BrowserRouter>
   );
 }
