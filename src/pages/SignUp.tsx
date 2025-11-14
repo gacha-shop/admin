@@ -1,6 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { AdminAuthService } from "@/services/admin-auth.service";
+import {
+  ShopService,
+  type ShopValidationResult,
+} from "@/services/shop.service";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -20,10 +24,34 @@ export function SignUp() {
     confirmPassword: "",
     full_name: "",
     role: "admin" as "admin" | "owner",
+    // Owner 전용 필드
+    phone: "",
+    shop_id: "",
+    business_license: "",
+    business_name: "",
   });
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
+  const [shopValidation, setShopValidation] =
+    useState<ShopValidationResult | null>(null);
+  const [isValidatingShop, setIsValidatingShop] = useState(false);
+
+  // shop_id 실시간 검증
+  useEffect(() => {
+    if (formData.role === "owner" && formData.shop_id) {
+      const timeoutId = setTimeout(async () => {
+        setIsValidatingShop(true);
+        const result = await ShopService.validateShopId(formData.shop_id);
+        setShopValidation(result);
+        setIsValidatingShop(false);
+      }, 500); // 0.5초 debounce
+
+      return () => clearTimeout(timeoutId);
+    } else {
+      setShopValidation(null);
+    }
+  }, [formData.shop_id, formData.role]);
 
   const handleChange = (field: string, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
@@ -55,6 +83,25 @@ export function SignUp() {
       return false;
     }
 
+    // Owner 전용 필드 검증
+    if (formData.role === "owner") {
+      if (!formData.phone.trim()) {
+        setError("전화번호는 필수입니다.");
+        return false;
+      }
+
+      if (!formData.shop_id.trim()) {
+        setError("매장 ID는 필수입니다.");
+        return false;
+      }
+
+      // shop_id 검증 결과 확인
+      if (!shopValidation?.valid) {
+        setError(shopValidation?.error || "매장 ID를 확인해주세요.");
+        return false;
+      }
+    }
+
     return true;
   };
 
@@ -75,6 +122,11 @@ export function SignUp() {
         password: formData.password,
         full_name: formData.full_name,
         role: formData.role,
+        // Owner 전용 필드
+        phone: formData.phone || undefined,
+        shop_id: formData.shop_id || undefined,
+        business_license: formData.business_license || undefined,
+        business_name: formData.business_name || undefined,
       });
 
       if (error) {
@@ -193,6 +245,106 @@ export function SignUp() {
                   관리자: 전체 상점 관리 권한 / 사장님: 본인 상점만 관리
                 </p>
               </div>
+
+              {/* Owner 전용 필드들 */}
+              {formData.role === "owner" && (
+                <>
+                  <div>
+                    <Label htmlFor="phone">
+                      전화번호 <span className="text-red-500">*</span>
+                    </Label>
+                    <Input
+                      id="phone"
+                      name="phone"
+                      type="tel"
+                      required
+                      value={formData.phone}
+                      onChange={(e) => handleChange("phone", e.target.value)}
+                      placeholder="010-1234-5678"
+                      className="mt-1"
+                    />
+                  </div>
+
+                  <div>
+                    <Label htmlFor="shop_id">
+                      매장 ID <span className="text-red-500">*</span>
+                    </Label>
+                    <Input
+                      id="shop_id"
+                      name="shop_id"
+                      type="text"
+                      required
+                      value={formData.shop_id}
+                      onChange={(e) => handleChange("shop_id", e.target.value)}
+                      placeholder="관리자에게 받은 매장 ID를 입력하세요"
+                      className="mt-1"
+                    />
+                    <p className="mt-1 text-xs text-gray-500">
+                      관리자가 문자로 전달한 UUID를 붙여넣기 해주세요
+                    </p>
+
+                    {/* 실시간 검증 결과 표시 */}
+                    {formData.shop_id && (
+                      <div className="mt-2">
+                        {isValidatingShop ? (
+                          <p className="text-sm text-gray-500">
+                            매장 확인 중...
+                          </p>
+                        ) : shopValidation ? (
+                          shopValidation.valid ? (
+                            <div className="rounded-md bg-green-50 p-3">
+                              <p className="text-sm font-medium text-green-800">
+                                ✓ {shopValidation.name}
+                              </p>
+                              <p className="text-xs text-green-600 mt-1">
+                                {shopValidation.address}
+                              </p>
+                            </div>
+                          ) : (
+                            <div className="rounded-md bg-red-50 p-3">
+                              <p className="text-sm font-medium text-red-800">
+                                ✗ {shopValidation.error}
+                              </p>
+                            </div>
+                          )
+                        ) : null}
+                      </div>
+                    )}
+                  </div>
+
+                  <div>
+                    <Label htmlFor="business_license">
+                      사업자등록번호 (선택)
+                    </Label>
+                    <Input
+                      id="business_license"
+                      name="business_license"
+                      type="text"
+                      value={formData.business_license}
+                      onChange={(e) =>
+                        handleChange("business_license", e.target.value)
+                      }
+                      placeholder="123-45-67890"
+                      className="mt-1"
+                    />
+                  </div>
+
+                  <div>
+                    <Label htmlFor="business_name">상호명 (선택)</Label>
+                    <Input
+                      id="business_name"
+                      name="business_name"
+                      type="text"
+                      value={formData.business_name}
+                      onChange={(e) =>
+                        handleChange("business_name", e.target.value)
+                      }
+                      placeholder="가게 이름"
+                      className="mt-1"
+                    />
+                  </div>
+                </>
+              )}
 
               <div>
                 <Label htmlFor="password">비밀번호</Label>
