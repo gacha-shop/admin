@@ -28,12 +28,14 @@ import {
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Plus, Search, Clock } from "lucide-react";
 import type {
   CreateStoreFormData,
   CreateStoreDto,
   UpdateStoreDto,
 } from "../types/store.types";
+import { SHOP_TYPE_OPTIONS } from "../types/store.types";
 import { useCreateStore, useUpdateStore, useStore } from "@/hooks/useStores";
 import { AddressSearchDialog, type AddressData } from "./AddressSearchDialog";
 import { OperatingHoursModal } from "./OperatingHoursModal";
@@ -72,7 +74,7 @@ export function StoreRegistrationModal({
   const form = useForm<CreateStoreFormData>({
     defaultValues: {
       name: "",
-      shop_type: "",
+      shop_type: [], // Array of shop types
       description: "",
       phone: "",
       social_urls: null,
@@ -139,7 +141,7 @@ export function StoreRegistrationModal({
       // Transform form data to DTO
       const baseDto = {
         name: data.name,
-        shop_type: data.shop_type as "gacha" | "figure" | "both",
+        shop_type: data.shop_type, // Already an array
         description: data.description || undefined,
         phone: data.phone || undefined,
         social_urls: data.social_urls || undefined,
@@ -251,27 +253,47 @@ export function StoreRegistrationModal({
                 <FormField
                   control={form.control}
                   name="shop_type"
-                  rules={{ required: "스토어 타입은 필수입니다" }}
+                  rules={{
+                    validate: (value) =>
+                      value.length > 0 || "최소 1개 이상의 타입을 선택해주세요",
+                  }}
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>
                         스토어 타입 <span className="text-red-500">*</span>
                       </FormLabel>
-                      <Select
-                        onValueChange={field.onChange}
-                        defaultValue={field.value}
-                      >
-                        <FormControl>
-                          <SelectTrigger>
-                            <SelectValue placeholder="선택하세요" />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent>
-                          <SelectItem value="gacha">가챠</SelectItem>
-                          <SelectItem value="figure">피규어</SelectItem>
-                          <SelectItem value="both">가챠 + 피규어</SelectItem>
-                        </SelectContent>
-                      </Select>
+                      <FormDescription className="text-xs mb-2">
+                        복수 선택 가능
+                      </FormDescription>
+                      <div className="space-y-2">
+                        {SHOP_TYPE_OPTIONS.map((option) => (
+                          <div
+                            key={option.value}
+                            className="flex items-center space-x-2"
+                          >
+                            <Checkbox
+                              id={`shop-type-${option.value}`}
+                              checked={field.value?.includes(option.value)}
+                              onCheckedChange={(checked) => {
+                                const currentValue = field.value || [];
+                                if (checked) {
+                                  field.onChange([...currentValue, option.value]);
+                                } else {
+                                  field.onChange(
+                                    currentValue.filter((v) => v !== option.value)
+                                  );
+                                }
+                              }}
+                            />
+                            <label
+                              htmlFor={`shop-type-${option.value}`}
+                              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
+                            >
+                              {option.label}
+                            </label>
+                          </div>
+                        ))}
+                      </div>
                       <FormMessage />
                     </FormItem>
                   )}
