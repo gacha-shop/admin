@@ -15,6 +15,7 @@ Gacha Store Admin 프로젝트의 모든 문서가 여기에 있습니다.
 
 ## 아키텍처
 
+- [Client-Backend Architecture](./architecture/client-backend-architecture.md) - 클라이언트 ↔ 백엔드 아키텍처 구조
 - [Architecture Overview](./architecture/overview.md) - 전체 아키텍처
 - [Directory Structure](./architecture/directory-structure.md) - 폴더 구조 설명
 
@@ -28,9 +29,13 @@ Gacha Store Admin 프로젝트의 모든 문서가 여기에 있습니다.
 
 ## 데이터베이스
 
-- [Database Schema](./database/schema.md) - 데이터베이스 스키마 개요
+- [Database Schema Overview](./database/schema-overview.md) - 데이터베이스 전체 구조 및 개요
+- [Edge Functions](./database/edge-functions.md) - Supabase Edge Functions API 문서
 - [Tables](./database/tables/) - 테이블별 상세 스키마
   - [Shops Table](./database/tables/shops.md) - 상점 테이블 스키마
+  - [Admin Users Table](./database/tables/admin_users.md) - 관리자 사용자 테이블
+  - [Menus Table](./database/tables/menus.md) - 메뉴 마스터 테이블
+  - [Tags Table](./database/tables/tags.md) - 태그 마스터 테이블
 
 ## API
 

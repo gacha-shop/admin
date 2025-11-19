@@ -95,7 +95,7 @@ export default function MenuManagement() {
                     {menu.code}
                   </TableCell>
                   <TableCell className="font-medium">{menu.name}</TableCell>
-                  <TableCell className="text-gray-600 max-w-xs truncate">
+                  <TableCell className="text-gray-600 max-w-xs truncate" title={menu.description || undefined}>
                     {menu.description || "-"}
                   </TableCell>
                   <TableCell>{getParentMenuName(menu.parent_id)}</TableCell>

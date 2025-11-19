@@ -1,6 +1,27 @@
-import type { DataSource, BusinessHours } from "@/features/store/types/store.types";
+import type {
+  DataSource,
+  BusinessHours,
+} from "@/features/store/types/store.types";
 
-export type ShopType = "gacha" | "figure" | "both";
+/**
+ * Individual shop type value
+ */
+export type ShopTypeValue = "gacha" | "figure" | "claw";
+
+/**
+ * Shop type as an array (multiple types can be selected)
+ */
+export type ShopType = ShopTypeValue[];
+
+/**
+ * Available shop type options for UI
+ */
+export const SHOP_TYPE_OPTIONS = [
+  { value: "gacha", label: "가챠" },
+  { value: "figure", label: "피규어" },
+  { value: "claw", label: "클로우" },
+] as const;
+
 export type VerificationStatus = "pending" | "verified" | "rejected";
 export type AddressType = "R" | "J";
 
@@ -45,7 +66,6 @@ export interface Store {
   business_hours: BusinessHours | null;
   is_24_hours: boolean | null;
   gacha_machine_count: number | null;
-  main_series: string[] | null;
   verification_status: VerificationStatus;
   verified_at: string | null;
   verified_by: string | null;

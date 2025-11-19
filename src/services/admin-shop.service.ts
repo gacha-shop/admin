@@ -19,7 +19,7 @@ export interface SNS {
 export interface Shop {
   id: string;
   name: string;
-  shop_type: string;
+  shop_type: string[]; // Array of shop types
   description: string | null;
   phone: string | null;
   latitude: number | null;
@@ -27,7 +27,6 @@ export interface Shop {
   business_hours: BusinessHours | null;
   is_24_hours: boolean | null;
   gacha_machine_count: number | null;
-  main_series: string[] | null;
   verification_status: "pending" | "verified" | "rejected";
   data_source: "admin_input" | "user_input" | "crawling";
   sido: string;
@@ -75,7 +74,7 @@ export interface BusinessHours {
 
 export interface ShopCreateInput {
   name: string;
-  shop_type: string;
+  shop_type: string[]; // Array of shop types
   description?: string;
   phone?: string;
   latitude?: number;
@@ -83,7 +82,6 @@ export interface ShopCreateInput {
   business_hours?: BusinessHours;
   is_24_hours?: boolean;
   gacha_machine_count?: number;
-  main_series?: string[];
   sido: string;
   sigungu?: string;
   jibun_address?: string;
@@ -104,7 +102,6 @@ export interface ShopUpdateInput {
   business_hours?: BusinessHours;
   is_24_hours?: boolean;
   gacha_machine_count?: number;
-  main_series?: string[];
   detail_address?: string;
   social_urls?: Partial<SNS>;
   verification_status?: "pending" | "verified" | "rejected";

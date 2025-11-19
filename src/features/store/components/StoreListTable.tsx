@@ -10,6 +10,7 @@ import {
 import { Trash2 } from 'lucide-react';
 import { useStores, useDeleteStore } from '@/hooks/useStores';
 import type { Store, ShopType, VerificationStatus } from '@/types/store';
+import { formatShopTypes } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -19,6 +20,14 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
 import { StoreRegistrationModal } from './StoreRegistrationModal';
 
 interface ColumnsProps {
@@ -47,13 +56,8 @@ const createColumns = ({
     accessorKey: 'shop_type',
     header: '매장 유형',
     cell: ({ row }) => {
-      const type = row.getValue('shop_type') as ShopType;
-      const typeLabels: Record<ShopType, string> = {
-        gacha: '가챠',
-        figure: '피규어',
-        both: '가챠+피규어',
-      };
-      return <span>{typeLabels[type]}</span>;
+      const types = row.getValue('shop_type') as ShopType;
+      return <span>{formatShopTypes(types)}</span>;
     },
   },
   {
@@ -66,7 +70,7 @@ const createColumns = ({
           ? row.original.jibun_address
           : row.original.road_address) || row.original.road_address;
       const totalAddress = `${address} ${row.original.detail_address || ''}`;
-      return <div className='max-w-md truncate'>{totalAddress}</div>;
+      return <div className='max-w-xs truncate' title={totalAddress}>{totalAddress}</div>;
     },
   },
   {
@@ -222,47 +226,50 @@ export function StoreListTable() {
       />
 
       <div className='space-y-4'>
-        {/* Table */}
-        <div className='border border-gray-300 rounded-lg overflow-hidden'>
-          <table className='w-full'>
-            <thead className='bg-gray-50'>
-              {table.getHeaderGroups().map((headerGroup) => (
-                <tr key={headerGroup.id}>
-                  {headerGroup.headers.map((header) => (
-                    <th
-                      key={header.id}
-                      className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'
-                    >
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
-                    </th>
-                  ))}
-                </tr>
-              ))}
-            </thead>
-            <tbody className='bg-white divide-y divide-gray-200'>
-              {table.getRowModel().rows.map((row) => (
-                <tr key={row.id} className='hover:bg-gray-50'>
+        {/* Table with horizontal scroll */}
+        <Table>
+          <TableHeader>
+            {table.getHeaderGroups().map((headerGroup) => (
+              <TableRow key={headerGroup.id}>
+                {headerGroup.headers.map((header) => (
+                  <TableHead key={header.id}>
+                    {header.isPlaceholder
+                      ? null
+                      : flexRender(
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
+                  </TableHead>
+                ))}
+              </TableRow>
+            ))}
+          </TableHeader>
+          <TableBody>
+            {table.getRowModel().rows.length ? (
+              table.getRowModel().rows.map((row) => (
+                <TableRow key={row.id}>
                   {row.getVisibleCells().map((cell) => (
-                    <td
-                      key={cell.id}
-                      className='px-6 py-4 whitespace-nowrap text-sm text-gray-900'
-                    >
+                    <TableCell key={cell.id}>
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext()
                       )}
-                    </td>
+                    </TableCell>
                   ))}
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+                </TableRow>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell
+                  colSpan={columns.length}
+                  className='h-24 text-center'
+                >
+                  데이터가 없습니다.
+                </TableCell>
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
 
         {/* Pagination */}
         <div className='flex items-center justify-between'>
@@ -276,20 +283,20 @@ export function StoreListTable() {
             개 표시
           </div>
           <div className='flex gap-2'>
-            <button
+            <Button
+              variant='outline'
               onClick={() => table.previousPage()}
               disabled={!table.getCanPreviousPage()}
-              className='px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed'
             >
               이전
-            </button>
-            <button
+            </Button>
+            <Button
+              variant='outline'
               onClick={() => table.nextPage()}
               disabled={!table.getCanNextPage()}
-              className='px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed'
             >
               다음
-            </button>
+            </Button>
           </div>
         </div>
       </div>
