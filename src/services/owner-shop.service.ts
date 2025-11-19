@@ -38,7 +38,7 @@ export interface BusinessHours {
 export interface Shop {
   id: string;
   name: string;
-  shop_type: string;
+  shop_type: string[]; // Array of shop types
   description: string | null;
   phone: string | null;
   latitude: number | null;
@@ -46,7 +46,6 @@ export interface Shop {
   business_hours: BusinessHours | null;
   is_24_hours: boolean | null;
   gacha_machine_count: number | null;
-  main_series: string[] | null;
   verification_status: string;
   sido: string;
   sigungu: string | null;
@@ -69,12 +68,14 @@ export interface Shop {
 }
 
 export interface ShopUpdateInput {
+  name?: string;
+  shop_type?: string[];
+  tag_ids?: string[];
   description?: string;
   phone?: string;
   business_hours?: BusinessHours;
   is_24_hours?: boolean;
   gacha_machine_count?: number;
-  main_series?: string[];
   detail_address?: string;
   social_urls?: Partial<SNS>;
 }
