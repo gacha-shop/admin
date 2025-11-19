@@ -19,6 +19,14 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
 import { TagRegistrationModal } from '@/components/tag/TagRegistrationModal';
 
 interface ColumnsProps {
@@ -49,7 +57,7 @@ const createColumns = ({
     cell: ({ row }) => {
       const description = row.getValue('description') as string | null;
       return (
-        <div className='max-w-md truncate text-gray-600'>
+        <div className='max-w-xs truncate text-gray-600' title={description || undefined}>
           {description || '-'}
         </div>
       );
@@ -211,58 +219,50 @@ export default function Tags() {
       </div>
       <div className='bg-white rounded-lg shadow p-6'>
         <div className='space-y-4'>
-          {/* Table */}
-          <div className='border border-gray-300 rounded-lg overflow-hidden'>
-            <table className='w-full'>
-              <thead className='bg-gray-50'>
-                {table.getHeaderGroups().map((headerGroup) => (
-                  <tr key={headerGroup.id}>
-                    {headerGroup.headers.map((header) => (
-                      <th
-                        key={header.id}
-                        className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'
-                      >
-                        {header.isPlaceholder
-                          ? null
-                          : flexRender(
-                              header.column.columnDef.header,
-                              header.getContext()
-                            )}
-                      </th>
-                    ))}
-                  </tr>
-                ))}
-              </thead>
-              <tbody className='bg-white divide-y divide-gray-200'>
-                {table.getRowModel().rows.length === 0 ? (
-                  <tr>
-                    <td
-                      colSpan={columns.length}
-                      className='px-6 py-8 text-center text-sm text-gray-500'
-                    >
-                      등록된 태그가 없습니다.
-                    </td>
-                  </tr>
-                ) : (
-                  table.getRowModel().rows.map((row) => (
-                    <tr key={row.id} className='hover:bg-gray-50'>
-                      {row.getVisibleCells().map((cell) => (
-                        <td
-                          key={cell.id}
-                          className='px-6 py-4 whitespace-nowrap text-sm text-gray-900'
-                        >
-                          {flexRender(
-                            cell.column.columnDef.cell,
-                            cell.getContext()
+          {/* Table with horizontal scroll */}
+          <Table>
+            <TableHeader>
+              {table.getHeaderGroups().map((headerGroup) => (
+                <TableRow key={headerGroup.id}>
+                  {headerGroup.headers.map((header) => (
+                    <TableHead key={header.id}>
+                      {header.isPlaceholder
+                        ? null
+                        : flexRender(
+                            header.column.columnDef.header,
+                            header.getContext()
                           )}
-                        </td>
-                      ))}
-                    </tr>
-                  ))
-                )}
-              </tbody>
-            </table>
-          </div>
+                    </TableHead>
+                  ))}
+                </TableRow>
+              ))}
+            </TableHeader>
+            <TableBody>
+              {table.getRowModel().rows.length ? (
+                table.getRowModel().rows.map((row) => (
+                  <TableRow key={row.id}>
+                    {row.getVisibleCells().map((cell) => (
+                      <TableCell key={cell.id}>
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell
+                    colSpan={columns.length}
+                    className='h-24 text-center'
+                  >
+                    등록된 태그가 없습니다.
+                  </TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
 
           {/* Total Count */}
           {data && data.length > 0 && (
