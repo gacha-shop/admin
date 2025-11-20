@@ -1,17 +1,17 @@
-'use no memo';
+"use no memo";
 
-import { useState } from 'react';
+import { useState } from "react";
 import {
   flexRender,
   getCoreRowModel,
   useReactTable,
   type ColumnDef,
-} from '@tanstack/react-table';
-import { Trash2 } from 'lucide-react';
-import { useStores, useDeleteStore } from '@/hooks/useStores';
-import type { Store, ShopType, VerificationStatus } from '@/types/store';
-import { formatShopTypes } from '@/lib/utils';
-import { Button } from '@/components/ui/button';
+} from "@tanstack/react-table";
+import { Trash2 } from "lucide-react";
+import { useStores, useDeleteStore } from "@/hooks/useStores";
+import type { Store, ShopType, VerificationStatus } from "@/types/store";
+import { formatShopTypes } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -19,7 +19,7 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from '@/components/ui/dialog';
+} from "@/components/ui/dialog";
 import {
   Table,
   TableBody,
@@ -27,8 +27,8 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table';
-import { StoreRegistrationModal } from './StoreRegistrationModal';
+} from "@/components/ui/table";
+import { StoreRegistrationModal } from "./StoreRegistrationModal";
 
 interface ColumnsProps {
   onDeleteClick: (store: Store) => void;
@@ -41,52 +41,56 @@ const createColumns = ({
   onEditClick,
 }: ColumnsProps): ColumnDef<Store>[] => [
   {
-    accessorKey: 'name',
-    header: '매장명',
+    accessorKey: "name",
+    header: "매장명",
     cell: ({ row }) => (
       <button
         onClick={() => onEditClick(row.original)}
-        className='font-medium text-blue-600 hover:text-blue-800 hover:underline cursor-pointer'
+        className="font-medium text-blue-600 hover:text-blue-800 hover:underline cursor-pointer"
       >
-        {row.getValue('name')}
+        {row.getValue("name")}
       </button>
     ),
   },
   {
-    accessorKey: 'shop_type',
-    header: '매장 유형',
+    accessorKey: "shop_type",
+    header: "매장 유형",
     cell: ({ row }) => {
-      const types = row.getValue('shop_type') as ShopType;
+      const types = row.getValue("shop_type") as ShopType;
       return <span>{formatShopTypes(types)}</span>;
     },
   },
   {
-    accessorKey: 'address_full',
-    header: '주소',
+    accessorKey: "address_full",
+    header: "주소",
     cell: ({ row }) => {
       const addressType = row.original.address_type;
       const address =
-        (addressType === 'J'
+        (addressType === "J"
           ? row.original.jibun_address
           : row.original.road_address) || row.original.road_address;
-      const totalAddress = `${address} ${row.original.detail_address || ''}`;
-      return <div className='max-w-xs truncate' title={totalAddress}>{totalAddress}</div>;
+      const totalAddress = `${address} ${row.original.detail_address || ""}`;
+      return (
+        <div className="max-w-xs truncate" title={totalAddress}>
+          {totalAddress}
+        </div>
+      );
     },
   },
   {
-    accessorKey: 'verification_status',
-    header: '검증 상태',
+    accessorKey: "verification_status",
+    header: "검증 상태",
     cell: ({ row }) => {
-      const status = row.getValue('verification_status') as VerificationStatus;
+      const status = row.getValue("verification_status") as VerificationStatus;
       const statusStyles: Record<VerificationStatus, string> = {
-        pending: 'bg-yellow-100 text-yellow-800',
-        verified: 'bg-green-100 text-green-800',
-        rejected: 'bg-red-100 text-red-800',
+        pending: "bg-yellow-100 text-yellow-800",
+        verified: "bg-green-100 text-green-800",
+        rejected: "bg-red-100 text-red-800",
       };
       const statusLabels: Record<VerificationStatus, string> = {
-        pending: '대기중',
-        verified: '검증완료',
-        rejected: '거부됨',
+        pending: "대기중",
+        verified: "검증완료",
+        rejected: "거부됨",
       };
       return (
         <span
@@ -98,32 +102,32 @@ const createColumns = ({
     },
   },
   {
-    accessorKey: 'gacha_machine_count',
-    header: '기기 수',
+    accessorKey: "gacha_machine_count",
+    header: "기기 수",
     cell: ({ row }) => {
-      const count = row.getValue('gacha_machine_count') as number | null;
-      return <span>{count ?? '-'}</span>;
+      const count = row.getValue("gacha_machine_count") as number | null;
+      return <span>{count ?? "-"}</span>;
     },
   },
   {
-    accessorKey: 'created_at',
-    header: '등록일',
+    accessorKey: "created_at",
+    header: "등록일",
     cell: ({ row }) => {
-      const date = new Date(row.getValue('created_at'));
-      return <span>{date.toLocaleDateString('ko-KR')}</span>;
+      const date = new Date(row.getValue("created_at"));
+      return <span>{date.toLocaleDateString("ko-KR")}</span>;
     },
   },
   {
-    id: 'actions',
-    header: '액션',
+    id: "actions",
+    header: "액션",
     cell: ({ row }) => (
       <Button
-        variant='ghost'
-        size='icon-sm'
+        variant="ghost"
+        size="icon-sm"
         onClick={() => onDeleteClick(row.original)}
-        className='text-red-600 hover:text-red-700 hover:bg-red-50'
+        className="text-red-600 hover:text-red-700 hover:bg-red-50"
       >
-        <Trash2 className='h-4 w-4' />
+        <Trash2 className="h-4 w-4" />
       </Button>
     ),
   },
@@ -166,7 +170,7 @@ export function StoreListTable() {
       setDeleteDialogOpen(false);
       setStoreToDelete(null);
     } catch (error) {
-      console.error('Failed to delete store:', error);
+      console.error("Failed to delete store:", error);
     }
   };
 
@@ -194,10 +198,10 @@ export function StoreListTable() {
 
   if (error) {
     return (
-      <div className='flex items-center justify-center h-64'>
-        <div className='text-red-600'>
-          에러가 발생했습니다:{' '}
-          {error instanceof Error ? error.message : '알 수 없는 에러'}
+      <div className="flex items-center justify-center h-64">
+        <div className="text-red-600">
+          에러가 발생했습니다:{" "}
+          {error instanceof Error ? error.message : "알 수 없는 에러"}
         </div>
       </div>
     );
@@ -205,8 +209,8 @@ export function StoreListTable() {
 
   if (isLoading) {
     return (
-      <div className='flex items-center justify-center h-64'>
-        <div className='text-gray-500'>로딩 중...</div>
+      <div className="flex items-center justify-center h-64">
+        <div className="text-gray-500">로딩 중...</div>
       </div>
     );
   }
@@ -225,7 +229,7 @@ export function StoreListTable() {
         }}
       />
 
-      <div className='space-y-4'>
+      <div className="space-y-4">
         {/* Table with horizontal scroll */}
         <Table>
           <TableHeader>
@@ -262,7 +266,7 @@ export function StoreListTable() {
               <TableRow>
                 <TableCell
                   colSpan={columns.length}
-                  className='h-24 text-center'
+                  className="h-24 text-center"
                 >
                   데이터가 없습니다.
                 </TableCell>
@@ -272,9 +276,9 @@ export function StoreListTable() {
         </Table>
 
         {/* Pagination */}
-        <div className='flex items-center justify-between'>
-          <div className='text-sm text-gray-700'>
-            전체 {data?.pagination.total ?? 0}개 중{' '}
+        <div className="flex items-center justify-between">
+          <div className="text-sm text-gray-700">
+            전체 {data?.pagination.total ?? 0}개 중{" "}
             {pagination.pageIndex * pagination.pageSize + 1}-
             {Math.min(
               (pagination.pageIndex + 1) * pagination.pageSize,
@@ -282,16 +286,16 @@ export function StoreListTable() {
             )}
             개 표시
           </div>
-          <div className='flex gap-2'>
+          <div className="flex gap-2">
             <Button
-              variant='outline'
+              variant="outline"
               onClick={() => table.previousPage()}
               disabled={!table.getCanPreviousPage()}
             >
               이전
             </Button>
             <Button
-              variant='outline'
+              variant="outline"
               onClick={() => table.nextPage()}
               disabled={!table.getCanNextPage()}
             >
@@ -314,18 +318,18 @@ export function StoreListTable() {
           </DialogHeader>
           <DialogFooter>
             <Button
-              variant='outline'
+              variant="outline"
               onClick={handleDeleteCancel}
               disabled={deleteStore.isPending}
             >
               취소
             </Button>
             <Button
-              variant='destructive'
+              variant="destructive"
               onClick={handleDeleteConfirm}
               disabled={deleteStore.isPending}
             >
-              {deleteStore.isPending ? '삭제 중...' : '삭제'}
+              {deleteStore.isPending ? "삭제 중..." : "삭제"}
             </Button>
           </DialogFooter>
         </DialogContent>
