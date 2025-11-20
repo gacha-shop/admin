@@ -40,8 +40,8 @@ export interface CreateMenuRequest {
   name: string;
   description?: string;
   parent_id?: string;
-  path?: string;
-  icon?: string;
+  path?: string | null;
+  icon?: string | null;
   display_order?: number;
   is_active?: boolean;
   metadata?: Record<string, any>;
@@ -52,8 +52,8 @@ export interface UpdateMenuRequest {
   name?: string;
   description?: string;
   parent_id?: string;
-  path?: string;
-  icon?: string;
+  path?: string | null;
+  icon?: string | null;
   display_order?: number;
   is_active?: boolean;
   metadata?: Record<string, any>;

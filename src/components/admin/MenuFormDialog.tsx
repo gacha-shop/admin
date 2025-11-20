@@ -60,8 +60,6 @@ export function MenuFormDialog({
   const {
     register,
     handleSubmit,
-    setValue,
-    watch,
     reset,
     control,
     formState: { errors },
@@ -77,8 +75,6 @@ export function MenuFormDialog({
       is_active: true,
     },
   });
-
-  const isActive = watch("is_active");
 
   // Dialog 열릴 때 폼 초기화
   useEffect(() => {
@@ -138,9 +134,12 @@ export function MenuFormDialog({
       code: data.code,
       name: data.name,
       description: data.description || undefined,
-      parent_id: data.parent_id && data.parent_id !== "none" ? data.parent_id : undefined,
-      path: data.path || undefined,
-      icon: data.icon || undefined,
+      parent_id:
+        data.parent_id && data.parent_id !== "none"
+          ? data.parent_id
+          : undefined,
+      path: data.path ? data.path : null,
+      icon: data.icon ? data.icon : null,
       display_order: data.display_order,
       is_active: data.is_active,
     };
@@ -233,10 +232,7 @@ export function MenuFormDialog({
                 name="parent_id"
                 control={control}
                 render={({ field }) => (
-                  <Select
-                    value={field.value}
-                    onValueChange={field.onChange}
-                  >
+                  <Select value={field.value} onValueChange={field.onChange}>
                     <SelectTrigger id="parent_id">
                       <SelectValue placeholder="없음 (최상위 메뉴)" />
                     </SelectTrigger>
@@ -302,12 +298,16 @@ export function MenuFormDialog({
 
           {/* 활성 상태 */}
           <div className="flex items-center space-x-2">
-            <Checkbox
-              id="is_active"
-              checked={isActive}
-              onCheckedChange={(checked) =>
-                setValue("is_active", checked as boolean)
-              }
+            <Controller
+              name="is_active"
+              control={control}
+              render={({ field }) => (
+                <Checkbox
+                  id="is_active"
+                  checked={field.value}
+                  onCheckedChange={field.onChange}
+                />
+              )}
             />
             <Label
               htmlFor="is_active"
