@@ -1,5 +1,6 @@
 import { useAuth } from '@/hooks/useAuth';
 import { Button } from '@/components/ui/button';
+import { clearInstagramCredentials } from '@/lib/instagram-storage';
 
 export function GNB() {
   const { user, signOut } = useAuth();
@@ -7,6 +8,7 @@ export function GNB() {
   const handleLogout = async () => {
     try {
       await signOut();
+      clearInstagramCredentials();
     } catch (error) {
       console.error('로그아웃 실패:', error);
     }
